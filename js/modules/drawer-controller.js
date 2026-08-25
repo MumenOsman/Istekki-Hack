@@ -6,7 +6,6 @@ export function initDrawerController() {
   const openBtn = document.getElementById('menu-toggle-btn');
   const closeBtn = document.getElementById('drawer-close-btn');
   const drawer = document.getElementById('drawer-menu');
-  const deviceWrapper = document.querySelector('.device-wrapper');
   const menuItems = document.querySelectorAll('.drawer-menu-item');
 
   if (!drawer) return;
@@ -37,22 +36,21 @@ export function initDrawerController() {
     item.addEventListener('click', (e) => {
       const target = e.currentTarget.getAttribute('data-target');
       console.log(`[791 Menu] Navigating to: ${target}`);
-      closeDrawer();
       window.dispatchEvent(new CustomEvent('drawer:navigate', { detail: { target } }));
     });
   });
+}
 
-  function openDrawer() {
-    drawer.classList.add('open');
-    if (deviceWrapper) {
-      deviceWrapper.classList.add('drawer-open');
-    }
-  }
+export function openDrawer() {
+  const drawer = document.getElementById('drawer-menu');
+  const deviceWrapper = document.querySelector('.device-wrapper');
+  if (drawer) drawer.classList.add('open');
+  if (deviceWrapper) deviceWrapper.classList.add('drawer-open');
+}
 
-  function closeDrawer() {
-    drawer.classList.remove('open');
-    if (deviceWrapper) {
-      deviceWrapper.classList.remove('drawer-open');
-    }
-  }
+export function closeDrawer() {
+  const drawer = document.getElementById('drawer-menu');
+  const deviceWrapper = document.querySelector('.device-wrapper');
+  if (drawer) drawer.classList.remove('open');
+  if (deviceWrapper) deviceWrapper.classList.remove('drawer-open');
 }

@@ -7,6 +7,10 @@ import { initNavigation } from './modules/navigation.js';
 import { initDrawerController } from './modules/drawer-controller.js';
 import { initCallController } from './modules/call-controller.js';
 import { initMapController } from './modules/map-controller.js';
+import { initProfileController, openProfileScreen } from './modules/profile-controller.js';
+import { initSurveyController } from './modules/survey-controller.js';
+import { initHealthController, openHealthScreen } from './modules/health-controller.js';
+import { initSettingsController, openSettingsScreen } from './modules/settings-controller.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Update live clock in status bar
@@ -20,6 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
   initDrawerController();
   initCallController();
   initMapController();
+  initProfileController();
+  initSurveyController();
+  initHealthController();
+  initSettingsController();
+
+  // Handle drawer item routing
+  window.addEventListener('drawer:navigate', (e) => {
+    const target = e.detail?.target;
+    if (target === 'profile') {
+      openProfileScreen();
+    } else if (target === 'health-history') {
+      openHealthScreen();
+    } else if (target === 'settings') {
+      openSettingsScreen();
+    }
+  });
 
   console.log('🚀 [791 Application] Mother Mobile UI initialized successfully.');
 });

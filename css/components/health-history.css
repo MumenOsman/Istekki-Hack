@@ -1,0 +1,296 @@
+/* =========================================================
+   791 Health History & Clinical Medical Reports
+   Clean, authentic Finnish Kanta-style medical records
+   ========================================================= */
+
+.health-screen-overlay,
+.medical-report-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-app);
+  z-index: 360; /* Same tier as Profile */
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  overflow-y: auto;
+  box-sizing: border-box;
+  border-radius: 0 0 50px 50px;
+  
+  /* Hidden Scrollbars */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.medical-report-overlay {
+  z-index: 380; /* Detail overlay stacks above health list */
+}
+
+.health-screen-overlay::-webkit-scrollbar,
+.medical-report-overlay::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.health-screen-overlay.active,
+.medical-report-overlay.active {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Header */
+.health-header {
+  width: 100%;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E5E7EB;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.health-back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #F3F4F6;
+  border: none;
+  color: var(--color-primary-teal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.health-back-btn:active {
+  transform: scale(0.94);
+  background: #E5E7EB;
+}
+
+.health-back-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.health-header-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin: 0;
+}
+
+/* Report List Body */
+.health-body {
+  padding: 16px 20px 36px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.health-section-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 8px 0 2px 0;
+}
+
+/* Simple Standard Report Card */
+.report-card-item {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  text-align: left;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.report-card-item:hover {
+  border-color: var(--color-primary-teal);
+  background-color: #F8FAFC;
+}
+
+.report-card-item:active {
+  transform: scale(0.99);
+}
+
+.report-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.report-card-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748B;
+  letter-spacing: 0.2px;
+}
+
+.report-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1E293B;
+  line-height: 1.25;
+}
+
+.report-card-issuer {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-primary-teal);
+  margin-top: 2px;
+}
+
+.report-card-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 4px;
+  width: fit-content;
+}
+
+.report-card-tag.clinic {
+  background: #E0F2FE;
+  color: #0369A1;
+}
+
+.report-card-tag.lab {
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+}
+
+.report-chevron-icon {
+  width: 20px;
+  height: 20px;
+  color: #94A3B8;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------
+   Plain / Boring Clinical Medical Report Layout
+   --------------------------------------------------------- */
+.clinical-report-doc {
+  padding: 20px;
+  background: #FFFFFF;
+  min-height: 100%;
+  font-family: var(--font-family);
+  color: #1E293B;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Medical Header Box */
+.clinical-meta-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.clinical-meta-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #E2E8F0;
+  vertical-align: top;
+}
+
+.clinical-meta-label {
+  font-weight: 700;
+  color: #475569;
+  width: 35%;
+}
+
+.clinical-meta-value {
+  color: #0F172A;
+  font-weight: 500;
+}
+
+/* Plain Clinical Text Section */
+.clinical-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.clinical-section-heading {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+  text-transform: uppercase;
+  border-bottom: 1px solid #CBD5E1;
+  padding-bottom: 4px;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.clinical-text-block {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #334155;
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* Plain Lab Results Table */
+.clinical-lab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.clinical-lab-table th {
+  background: #F1F5F9;
+  font-weight: 700;
+  color: #475569;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1.5px solid #CBD5E1;
+}
+
+.clinical-lab-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #E2E8F0;
+  color: #1E293B;
+}
+
+.clinical-lab-table tr:nth-child(even) td {
+  background: #F8FAFC;
+}
+
+.clinical-signature-block {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px dashed #CBD5E1;
+  font-size: 12px;
+  color: #64748B;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}

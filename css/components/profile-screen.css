@@ -1,0 +1,239 @@
+/* =========================================================
+   791 Profile Screen Overlay
+   Consistent Right-to-Left Slide-In & Left-to-Right Slide-Out
+   Hidden Scrollbars
+   ========================================================= */
+
+.profile-screen-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-app);
+  z-index: 360; /* Above drawer (350) */
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  overflow-y: auto;
+  box-sizing: border-box;
+  border-radius: 0 0 50px 50px;
+  
+  /* Hide scrollbar completely */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.profile-screen-overlay::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.profile-screen-overlay.active {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Profile Header */
+.profile-header {
+  width: 100%;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #E5E7EB;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.profile-back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #F3F4F6;
+  border: none;
+  color: var(--color-primary-teal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.profile-back-btn:active {
+  transform: scale(0.94);
+  background: #E5E7EB;
+}
+
+.profile-back-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.profile-header-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin: 0;
+}
+
+/* Profile Content Form */
+.profile-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+/* Input Group Container */
+.profile-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4B5563;
+  letter-spacing: 0.2px;
+}
+
+/* Emergency Contact Section Header */
+.profile-section-divider {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid #E5E7EB;
+}
+
+.profile-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  letter-spacing: -0.2px;
+  margin: 0 0 10px 0;
+}
+
+/* Base Field Input Style */
+.profile-input {
+  width: 100%;
+  height: 46px;
+  border-radius: 12px;
+  border: 1.5px solid #D1D5DB;
+  background-color: #FFFFFF;
+  padding: 0 16px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-dark);
+  outline: none;
+  font-family: var(--font-family);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.profile-input:focus {
+  border-color: var(--color-primary-teal);
+  box-shadow: 0 0 0 3px rgba(0, 137, 123, 0.15);
+}
+
+/* Read-Only / Grayed-Out Field Style */
+.profile-input.disabled,
+.profile-input:disabled {
+  background-color: #F3F4F6;
+  border-color: #E5E7EB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+/* Bottom Action Buttons Container */
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+  padding-bottom: 30px;
+}
+
+/* 1. Authentication Button (Grayed Out with Green Checkmark) */
+.profile-auth-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 14px;
+  background-color: #F3F4F6;
+  border: 1.5px solid #E5E7EB;
+  color: #6B7280;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: not-allowed;
+  user-select: none;
+  outline: none;
+}
+
+.profile-auth-check-icon {
+  width: 22px;
+  height: 22px;
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+.profile-auth-check-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* 2. Self Survey Button with Centered Title & Plain Yellow Text Subtitle */
+.profile-survey-btn {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 14px;
+  background-color: var(--color-primary-teal);
+  border: none;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 8px 16px;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 4px 14px rgba(0, 137, 123, 0.25);
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.profile-survey-btn:hover {
+  background-color: #00796B;
+}
+
+.profile-survey-btn:active {
+  transform: scale(0.98);
+}
+
+.profile-survey-text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.profile-survey-status-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #FDE047;
+  margin-top: 3px;
+  line-height: 1;
+}

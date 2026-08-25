@@ -1,0 +1,126 @@
+/* Nurse & Clinic Screen */
+.nurse-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 28px;
+  position: relative;
+  width: 100%;
+}
+
+/* Clinic Info Header */
+.clinic-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 36px;
+  position: relative;
+}
+
+.clinic-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.clinic-pin-icon {
+  width: 26px;
+  height: 26px;
+  color: var(--color-primary-teal);
+  flex-shrink: 0;
+}
+
+.clinic-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-primary-teal);
+  letter-spacing: -0.5px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.clinic-address {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-primary-teal);
+  margin-top: 8px;
+  letter-spacing: -0.2px;
+  opacity: 0.9;
+}
+
+/* Action Buttons Container */
+.nurse-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 310px;
+}
+
+.nurse-btn {
+  width: 100%;
+  padding: 16px 20px;
+  background-color: var(--color-primary-teal);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 10px rgba(0, 137, 123, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nurse-btn:hover {
+  filter: brightness(1.05);
+}
+
+.nurse-btn:active {
+  transform: scale(0.98);
+  filter: brightness(0.95);
+}
+
+/* Floating Quick Map Action Button */
+.map-fab-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 24px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: var(--color-primary-teal);
+  color: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 14px rgba(0, 137, 123, 0.3);
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.map-fab-btn:hover {
+  filter: brightness(1.05);
+}
+
+.map-fab-btn:active {
+  transform: scale(0.95);
+  filter: brightness(0.95);
+}
+
+.map-fab-btn svg {
+  width: 36px;
+  height: 36px;
+}

@@ -1,0 +1,110 @@
+/* SOS Button Container */
+.sos-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+
+/* SOS Progress Ring Container */
+.sos-button-wrapper {
+  position: relative;
+  width: 285px;
+  height: 285px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Circular SVG Progress Ring for 10-Second Connecting State */
+.sos-progress-ring {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  pointer-events: none;
+  z-index: 5;
+  transform: rotate(-90deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.zen-sos-mode .sos-progress-ring {
+  opacity: 1;
+}
+
+.sos-progress-ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 6;
+}
+
+.sos-progress-ring-fill {
+  fill: none;
+  stroke: var(--color-primary-teal);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 890;
+  stroke-dashoffset: 890;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+/* Clean Push Button (Normal Mode: Red with White text) */
+.sos-button {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #E52E2E;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 12px rgba(229, 46, 46, 0.18), 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Zen Mode: Circle becomes White, Text becomes Red */
+.zen-sos-mode .sos-button {
+  background-color: #FFFFFF;
+  color: #E52E2E;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.sos-button:hover {
+  filter: brightness(1.02);
+}
+
+.sos-button:active {
+  transform: scale(0.97);
+}
+
+/* Identical typography sizing in both normal & connecting modes */
+.sos-title {
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  min-width: 130px;
+}
+
+.sos-subtitle {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  margin-top: 6px;
+  line-height: 1.2;
+}

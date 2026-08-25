@@ -1,0 +1,28 @@
+:root {
+  /* Brand & Theme Colors */
+  --color-primary-teal: #00897B;
+  --color-primary-teal-dark: #00695C;
+  --color-primary-teal-light: #E0F2F1;
+  --color-sos-red: #E52E2E;
+  --color-sos-red-hover: #D32525;
+  --color-sos-red-active: #B71C1C;
+  
+  /* Neutrals & Surfaces */
+  --color-bg-app: #FFFFFF;
+  --color-bg-secondary: #F8FAFC;
+  --color-text-main: #111827;
+  --color-text-muted: #6B7280;
+  --color-dot-inactive: #D1D5DB;
+  --color-dot-active: #00897B;
+  
+  /* Universal Typography */
+  --font-family: 'Inter', sans-serif;
+  
+  /* Elevation */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06);
+  
+  /* Animation / Timing */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}

@@ -1,0 +1,28 @@
+/* Carousel Dots Pagination */
+.pagination-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 0 32px 0;
+  gap: 10px;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-dot-inactive);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.dot.active {
+  background-color: var(--color-dot-active);
+}
+
+.dot:hover:not(.active) {
+  background-color: #9CA3AF;
+}

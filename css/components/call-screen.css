@@ -1,0 +1,159 @@
+/* Call Screen Overlay Container */
+.call-screen-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-app);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 0 50px 50px;
+}
+
+.call-screen-overlay.active {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Call Header / Status area */
+.call-header {
+  width: 100%;
+  padding: 16px 20px 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.call-timer-badge {
+  background-color: rgba(0, 137, 123, 0.1);
+  color: var(--color-primary-teal);
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Center Responder Profile */
+.call-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 16px 24px;
+}
+
+/* Crisp Ringing Call Icon */
+.call-avatar-icon {
+  width: 100px;
+  height: 100px;
+  color: var(--color-primary-teal);
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.call-avatar-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.call-contact-name {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--color-primary-teal);
+  letter-spacing: -0.5px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.call-facility-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-primary-teal);
+  margin-top: 10px;
+  max-width: 280px;
+  line-height: 1.3;
+  opacity: 0.95;
+}
+
+/* Bottom Call Control Dock - Seamless Phone Body Fit */
+.call-controls-dock {
+  width: 100%;
+  margin: 0;
+  background-color: var(--color-primary-teal);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  padding: 24px 16px 36px 16px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Dock Action Circular Buttons */
+.call-action-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  color: var(--color-primary-teal);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+.call-action-btn:hover {
+  filter: brightness(1.05);
+}
+
+.call-action-btn:active {
+  transform: scale(0.92);
+}
+
+.call-action-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* Solid Red Hang-Up Button */
+.call-action-btn.end-call-btn {
+  background-color: var(--color-sos-red);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(229, 46, 46, 0.4);
+}
+
+.call-action-btn.end-call-btn svg {
+  width: 32px;
+  height: 32px;
+  fill: #FFFFFF;
+}
+
+/* Active Toggle State */
+.call-action-btn.active-toggle {
+  background-color: #111827;
+  color: #FFFFFF;
+}

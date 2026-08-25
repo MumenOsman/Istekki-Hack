@@ -1,0 +1,219 @@
+/* =========================================================
+   791 Video Call Triage Screen (iPhone 17 - 6.png)
+   Instant Switch Without Slide Animation
+   ========================================================= */
+
+.video-screen-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0F172A;
+  z-index: 250;
+  display: none;
+  pointer-events: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-radius: 0 0 50px 50px;
+}
+
+.video-screen-overlay.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: auto;
+}
+
+/* Full-Screen Main Video Viewport (Midwife Feed: Laura Hakala) */
+.video-feed-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: #0F172A;
+  overflow: hidden;
+}
+
+.video-stream-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle at center, #1E293B 0%, #090D16 100%);
+  text-align: center;
+  padding: 20px;
+}
+
+.video-midwife-avatar {
+  width: 130px;
+  height: 130px;
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 3px solid rgba(56, 189, 248, 0.3);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.video-midwife-avatar svg {
+  width: 75px;
+  height: 75px;
+}
+
+.video-midwife-name {
+  color: #FFFFFF;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.video-midwife-role {
+  color: #38BDF8;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.video-midwife-facility {
+  color: #94A3B8;
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* Top Action Header */
+.video-top-header {
+  position: relative;
+  width: 100%;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+}
+
+.video-header-spacer {
+  width: 44px;
+}
+
+.video-top-header .call-timer-badge {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 18px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Crisp Camera Flip Button */
+.video-flip-camera-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.video-flip-camera-btn:active {
+  transform: scale(0.9);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.video-flip-camera-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Floating Picture-in-Picture (PiP) Mother / Self Window */
+.video-pip-window {
+  position: absolute;
+  right: 18px;
+  bottom: 125px;
+  width: 112px;
+  height: 156px;
+  background: #1E293B;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  z-index: 10;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 8px;
+  background: linear-gradient(180deg, #334155 0%, #0F172A 100%);
+}
+
+.video-pip-avatar {
+  width: 48px;
+  height: 48px;
+  color: #F87171;
+  background: rgba(239, 68, 68, 0.15);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-pip-avatar svg {
+  width: 28px;
+  height: 28px;
+}
+
+.video-pip-name {
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 6px;
+  line-height: 1.2;
+}
+
+.video-pip-role {
+  color: #FCA5A5;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Bottom Video Controls Dock */
+.video-controls-dock {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  background-color: var(--color-primary-teal);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  padding: 22px 16px 36px 16px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 20;
+}

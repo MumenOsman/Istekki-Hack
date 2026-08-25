@@ -1,0 +1,38 @@
+/* App Header */
+.app-header {
+  position: relative;
+  width: 100%;
+  padding: 12px 20px 8px 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 10;
+}
+
+/* Hamburger Menu Button */
+.menu-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-btn:hover {
+  opacity: 0.8;
+}
+
+.menu-btn:active {
+  opacity: 0.6;
+}
+
+.menu-btn svg {
+  display: block;
+  width: 28px;
+  height: 24px;
+}

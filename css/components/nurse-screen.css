@@ -65,7 +65,7 @@
   width: 100%;
   padding: 16px 20px;
   background-color: var(--color-primary-teal);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   border: none;
   border-radius: 12px;
   font-size: 24px;
@@ -75,6 +75,8 @@
   outline: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   box-shadow: 0 4px 10px rgba(0, 137, 123, 0.25);
   display: flex;
   justify-content: center;
@@ -99,7 +101,7 @@
   height: 72px;
   border-radius: 50%;
   background-color: var(--color-primary-teal);
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   border: none;
   cursor: pointer;
   display: flex;
@@ -109,6 +111,7 @@
   outline: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
 }
 
 .map-fab-btn:hover {

@@ -52,7 +52,7 @@
   transition: stroke-dashoffset 0.1s linear;
 }
 
-/* Clean Push Button (Normal Mode: Red with White text) */
+/* Clean Push Button (Normal Mode: Red with Pure 100% White text) */
 .sos-button {
   position: relative;
   width: 100%;
@@ -60,7 +60,7 @@
   border-radius: 50%;
   background-color: #E52E2E;
   border: none;
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -70,14 +70,16 @@
   outline: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   box-shadow: 0 4px 12px rgba(229, 46, 46, 0.18), 0 2px 4px rgba(0, 0, 0, 0.08);
   transition: background-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* Zen Mode: Circle becomes White, Text becomes Red */
+/* Zen Mode: Circle becomes Pure White #FFFFFF, Text becomes Pure Red */
 .zen-sos-mode .sos-button {
-  background-color: #FFFFFF;
-  color: #E52E2E;
+  background-color: #FFFFFF !important;
+  color: #E52E2E !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
@@ -99,6 +101,11 @@
   font-variant-numeric: tabular-nums;
   display: inline-block;
   min-width: 130px;
+  color: #FFFFFF !important;
+}
+
+.zen-sos-mode .sos-title {
+  color: #E52E2E !important;
 }
 
 .sos-subtitle {
@@ -107,4 +114,9 @@
   letter-spacing: -0.2px;
   margin-top: 6px;
   line-height: 1.2;
+  color: #FFFFFF !important;
+}
+
+.zen-sos-mode .sos-subtitle {
+  color: #E52E2E !important;
 }

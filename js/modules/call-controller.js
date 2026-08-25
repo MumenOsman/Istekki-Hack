@@ -2,6 +2,7 @@
  * Call Controller
  * Manages active emergency / triage voice and video call lifecycle, live duration timer,
  * switching between audio and video modes, and dock actions.
+ * Initiated strictly by the SOS emergency trigger.
  */
 import { state } from './state.js';
 import { cancelSOSCountdown } from './sos-controller.js';
@@ -19,19 +20,11 @@ export function initCallController() {
   const callSpeakerBtn = document.getElementById('call-speaker-btn');
   const videoSpeakerBtn = document.getElementById('video-speaker-btn');
 
-  // Listen for SOS Countdown Completion
+  // Listen for SOS Countdown Completion (Emergency Call Screen is strictly for SOS)
   window.addEventListener('sos:connected', () => {
     openCallScreen({
       responderName: 'Laura Hakala',
       facilityName: 'Kuopion yliopistollinen sairaala'
-    });
-  });
-
-  // Listen for direct Nurse call
-  window.addEventListener('nurse:call', () => {
-    openCallScreen({
-      responderName: state.motherInfo.assignedMidwife,
-      facilityName: state.motherInfo.assignedClinic
     });
   });
 
@@ -102,7 +95,7 @@ export function openCallScreen(info) {
   callScreen.classList.add('active');
 
   startCallTimer();
-  console.log('[791 Call] Voice call active with responder:', info.responderName);
+  console.log('[791 Call] Emergency voice call active with responder:', info.responderName);
 }
 
 export function openVideoScreen() {
@@ -134,7 +127,7 @@ export function endCall() {
   state.callStatus = 'idle';
   state.emergencyActive = false;
 
-  console.log('[791 Call] Call ended. Returned to main screen.');
+  console.log('[791 Call] Emergency Call ended. Returned to main screen.');
 }
 
 function startCallTimer() {

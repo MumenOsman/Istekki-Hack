@@ -1,0 +1,219 @@
+/* =========================================================
+   791 Midwife App - Call Logs Screen Overlay
+   ========================================================= */
+
+.midwife-call-logs-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  z-index: 360;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.midwife-call-logs-overlay.open {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Call Logs Header */
+.midwife-logs-header {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.midwife-logs-back-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-primary-teal);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.midwife-logs-back-btn:hover {
+  opacity: 0.8;
+}
+
+.midwife-logs-header-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.2px;
+}
+
+.midwife-logs-header-spacer {
+  width: 50px;
+}
+
+/* Content Container */
+.midwife-logs-content {
+  flex: 1;
+  padding: 18px 16px 28px 16px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.midwife-logs-content::-webkit-scrollbar {
+  display: none;
+}
+
+.midwife-logs-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+.midwife-logs-main-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.midwife-logs-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary-teal);
+}
+
+/* Call Logs Table with Grab & Swipe Physics (Hidden Scrollbars) */
+.midwife-logs-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.midwife-logs-table-wrapper.grabbing {
+  cursor: grabbing;
+}
+
+.midwife-logs-table-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.midwife-logs-table {
+  width: 100%;
+  min-width: 460px;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--font-family);
+  font-size: 13px;
+}
+
+.midwife-logs-table th {
+  background-color: #F8FAFC;
+  color: #475569;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 14px;
+  border-bottom: 1.5px solid #E2E8F0;
+  white-space: nowrap;
+}
+
+.midwife-logs-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #1E293B;
+  vertical-align: middle;
+}
+
+.midwife-logs-table tr:last-child td {
+  border-bottom: none;
+}
+
+.midwife-logs-table tr:hover {
+  background-color: #F8FAFC;
+}
+
+.patient-name-text {
+  font-weight: 700;
+  color: #0F172A;
+  white-space: nowrap;
+}
+
+.call-time-text {
+  font-weight: 600;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.call-duration-text {
+  font-weight: 500;
+  color: #64748B;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Clinical Outcome Badge */
+.log-outcome-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.log-outcome-badge.ambulance {
+  background-color: #FEE2E2;
+  color: #DC2626;
+}
+
+.log-outcome-badge.admitted {
+  background-color: #FEF3C7;
+  color: #D97706;
+}
+
+.log-outcome-badge.monitoring {
+  background-color: #E0F2FE;
+  color: #0284C7;
+}
+
+.log-outcome-badge.resolved {
+  background-color: #DCFCE7;
+  color: #16A34A;
+}
+
+/* Tablet Layout Enhancements */
+@media (min-width: 600px) {
+  .midwife-logs-content {
+    padding: 24px 32px;
+  }
+}

@@ -8,14 +8,20 @@
   position: relative;
 }
 
-/* SOS Progress Ring Container */
+/* SOS Progress Ring Container (Exact 285px x 285px geometry matching Midwife button) */
 .sos-button-wrapper {
   position: relative;
   width: 285px;
   height: 285px;
+  min-width: 285px;
+  min-height: 285px;
+  max-width: 285px;
+  max-height: 285px;
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: translateY(46px); /* Exact height alignment with Midwife app */
+  box-sizing: border-box;
 }
 
 /* Circular SVG Progress Ring for 10-Second Connecting State */

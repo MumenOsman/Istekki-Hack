@@ -1,0 +1,285 @@
+/* =========================================================
+   791 Midwife App - Duty Screen, Listening Inversion & Status Prompt
+   ========================================================= */
+
+.midwife-duty-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px 32px 24px;
+  position: relative;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  transition: background-color 0.35s ease;
+}
+
+/* ---------------------------------------------------------
+   Active Listening State: Full Screen Filled with Green
+   --------------------------------------------------------- */
+.midwife-listening-mode .midwife-duty-container {
+  background-color: var(--color-primary-teal);
+}
+
+/* Top App Header with Hamburger Menu on Top-Right */
+.midwife-duty-header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 6px 0 10px 0;
+}
+
+.midwife-hamburger-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.midwife-hamburger-btn:active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.midwife-hamburger-btn svg {
+  display: block;
+  width: 28px;
+  height: 24px;
+}
+
+.midwife-hamburger-btn svg rect {
+  fill: var(--color-primary-teal);
+  transition: fill 0.35s ease;
+}
+
+/* In Listening Mode: Hamburger turns White */
+.midwife-listening-mode .midwife-hamburger-btn svg rect {
+  fill: #FFFFFF;
+}
+
+/* Center Content: Practitioner Info & Big Action Button */
+.midwife-duty-center-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin: auto 0;
+}
+
+/* Practitioner Info Block */
+.midwife-practitioner-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 32px;
+}
+
+/* Standby Mode: Green Text */
+.midwife-duty-practitioner-name {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--color-primary-teal);
+  letter-spacing: -0.6px;
+  line-height: 1.15;
+  margin: 0;
+  transition: color 0.35s ease;
+}
+
+.midwife-duty-practitioner-id {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary-teal);
+  letter-spacing: 0.2px;
+  transition: color 0.35s ease;
+}
+
+/* In Listening Mode: Practitioner Text turns Pure White */
+.midwife-listening-mode .midwife-duty-practitioner-name,
+.midwife-listening-mode .midwife-duty-practitioner-id {
+  color: #FFFFFF !important;
+}
+
+/* Big Button Wrapper */
+.midwife-duty-button-wrapper {
+  position: relative;
+  width: 285px;
+  height: 285px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Standby Mode Button: Brand Green Circle with White Text */
+.midwife-duty-button {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--color-primary-teal);
+  border: none;
+  color: #FFFFFF !important;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-shadow: 0 8px 24px rgba(0, 137, 123, 0.28), 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.35s ease, color 0.35s ease, box-shadow 0.35s ease, transform 0.1s ease;
+}
+
+.midwife-duty-button:active {
+  transform: scale(0.97);
+}
+
+/* Standby Mode Text: Pure White */
+.midwife-duty-action-text {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  color: #FFFFFF;
+  transition: color 0.35s ease;
+}
+
+.midwife-duty-status-sub {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  margin-top: 8px;
+  opacity: 0.95;
+  color: #FFFFFF;
+  transition: color 0.35s ease;
+}
+
+/* ---------------------------------------------------------
+   Active Listening Mode:
+   Button Circle becomes Pure White, Action Text becomes RED
+   --------------------------------------------------------- */
+.midwife-listening-mode .midwife-duty-button {
+  background-color: #FFFFFF !important;
+  color: var(--color-sos-red) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.midwife-listening-mode .midwife-duty-action-text {
+  color: var(--color-sos-red) !important;
+}
+
+.midwife-listening-mode .midwife-duty-status-sub {
+  color: var(--color-sos-red) !important;
+}
+
+/* ---------------------------------------------------------
+   Status Reason Selection Modal Prompt (Busy vs Break)
+   --------------------------------------------------------- */
+.midwife-reason-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  border-radius: 0 0 50px 50px;
+}
+
+.midwife-reason-modal-overlay.active {
+  display: flex;
+}
+
+.midwife-reason-modal-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 24px 20px;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.midwife-reason-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.midwife-reason-subtitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748B;
+  margin: -6px 0 4px 0;
+}
+
+/* Option Buttons Grid */
+.midwife-reason-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reason-choice-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  color: #1E293B;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reason-choice-btn:hover {
+  background-color: #FEF2F2;
+  border-color: #FCA5A5;
+  color: var(--color-sos-red);
+}
+
+.reason-choice-btn:active {
+  transform: scale(0.98);
+}
+
+/* Cancel Action */
+.reason-cancel-btn {
+  background: transparent;
+  border: none;
+  color: #64748B;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px;
+  outline: none;
+}
+
+.reason-cancel-btn:hover {
+  color: #0F172A;
+}

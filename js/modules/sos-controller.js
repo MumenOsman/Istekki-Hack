@@ -5,11 +5,40 @@
  * - White button with green progress ring
  * - Dynamic 10S -> 09S countdown & 'Calling Emergency' subtitle
  * - Click-to-cancel without cancel text
+ * - Broadcasts real-time emergency signals immediately on click to Midwife App
  */
 import { state } from './state.js';
 
 let animationFrameId = null;
 const COUNTDOWN_DURATION_MS = 10000; // 10 seconds
+let broadcastBus = null;
+
+try {
+  broadcastBus = new BroadcastChannel('791_emergency_bus');
+  // Listen for Midwife answering the call early
+  broadcastBus.onmessage = (event) => {
+    if (event.data?.type === 'CALL_ANSWERED') {
+      console.log('[791 SOS] Midwife answered early! Connecting call.');
+      onMidwifeAnsweredEarly(event.data.responder);
+    }
+  };
+} catch (e) {
+  console.warn('[791 SOS] BroadcastChannel not supported:', e);
+}
+
+// Storage event listener for answering early
+window.addEventListener('storage', (e) => {
+  if (e.key === '791_emergency_sync' && e.newValue) {
+    try {
+      const data = JSON.parse(e.newValue);
+      if (data.type === 'CALL_ANSWERED') {
+        onMidwifeAnsweredEarly(data.responder);
+      }
+    } catch (err) {
+      // ignore
+    }
+  }
+});
 
 export function initSOSController() {
   const sosBtn = document.getElementById('sos-button');
@@ -53,6 +82,22 @@ function startSOSCountdown() {
   if (subtitleEl) {
     subtitleEl.textContent = 'Calling Emergency';
   }
+
+  // Broadcast call initiation IMMEDIATELY to Midwife with 10-second timer
+  const motherPayload = {
+    name: state.motherInfo.name || 'Maria Nieminen',
+    age: `${state.motherInfo.age || 29}`,
+    week: 'H38+1',
+    parity: 'G2P1',
+    location: state.motherInfo.currentLocation || 'Juontotie 8, 70150 Kuopio'
+  };
+
+  broadcastMessage({
+    type: 'SOS_INITIATED',
+    durationMs: COUNTDOWN_DURATION_MS,
+    startTime: startTime,
+    mother: motherPayload
+  });
 
   function updateTick() {
     const elapsed = Date.now() - startTime;
@@ -107,12 +152,50 @@ export function cancelSOSCountdown() {
     progressFill.style.strokeDashoffset = '890';
   }
 
+  // Notify other tabs that SOS was cancelled
+  broadcastMessage({ type: 'SOS_CANCELLED' });
+
   console.log('[791 SOS] Zen Mode cancelled. Reset to original state.');
+}
+
+function onMidwifeAnsweredEarly(responder) {
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+
+  state.callStatus = 'connected';
+  const deviceWrapper = document.querySelector('.device-wrapper');
+  if (deviceWrapper) {
+    deviceWrapper.classList.remove('zen-sos-mode');
+  }
+
+  window.dispatchEvent(new CustomEvent('sos:connected', { 
+    detail: { 
+      timestamp: new Date().toISOString(),
+      motherInfo: state.motherInfo,
+      responder: responder || { responderName: 'Laura Hakala' }
+    } 
+  }));
 }
 
 function onSOSCountdownComplete() {
   state.callStatus = 'connected';
   console.log('[791 SOS] 10s Countdown completed! Emergency connection established.');
+
+  const motherPayload = {
+    name: state.motherInfo.name || 'Maria Nieminen',
+    age: `${state.motherInfo.age || 29}`,
+    week: 'H38+1',
+    parity: 'G2P1',
+    location: state.motherInfo.currentLocation || 'Juontotie 8, 70150 Kuopio'
+  };
+
+  broadcastMessage({
+    type: 'SOS_ACTIVATED',
+    mother: motherPayload,
+    timestamp: new Date().toISOString()
+  });
 
   window.dispatchEvent(new CustomEvent('sos:connected', { 
     detail: { 
@@ -120,4 +203,15 @@ function onSOSCountdownComplete() {
       motherInfo: state.motherInfo 
     } 
   }));
+}
+
+function broadcastMessage(payload) {
+  try {
+    if (broadcastBus) {
+      broadcastBus.postMessage(payload);
+    }
+    localStorage.setItem('791_emergency_sync', JSON.stringify({ ...payload, _t: Date.now() }));
+  } catch (err) {
+    console.warn('[791 SOS] Broadcast failed:', err);
+  }
 }

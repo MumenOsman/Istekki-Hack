@@ -1,0 +1,180 @@
+/* =========================================================
+   791 Midwife App - Team On-Duty Status Table (Screen 0)
+   ========================================================= */
+
+.midwife-team-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px 24px 20px;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.midwife-team-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Team Screen Header */
+.midwife-team-header {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.midwife-team-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.4px;
+}
+
+.midwife-team-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary-teal);
+  letter-spacing: 0.1px;
+}
+
+/* Structured Team Table with Grab & Swipe Physics (Hidden Scrollbars) */
+.midwife-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.midwife-table-wrapper.grabbing {
+  cursor: grabbing;
+}
+
+.midwife-table-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.midwife-team-table {
+  width: 100%;
+  min-width: 360px;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--font-family);
+  font-size: 14px;
+}
+
+.midwife-team-table th {
+  background-color: #F8FAFC;
+  color: #475569;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 14px;
+  border-bottom: 1.5px solid #E2E8F0;
+  white-space: nowrap;
+}
+
+.midwife-team-table td {
+  padding: 14px;
+  border-bottom: 1px solid #F1F5F9;
+  color: #1E293B;
+  vertical-align: middle;
+}
+
+.midwife-team-table tr:last-child td {
+  border-bottom: none;
+}
+
+.midwife-team-table tr.current-user-row {
+  background-color: #F0FDFA;
+}
+
+.midwife-team-table tr.current-user-row td {
+  font-weight: 600;
+}
+
+/* Name with optional badge */
+.midwife-table-name {
+  font-weight: 700;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.midwife-you-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background-color: var(--color-primary-teal);
+  color: #FFFFFF;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.midwife-table-id {
+  font-family: var(--font-family);
+  font-weight: 600;
+  color: #64748B;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* Status Column with Circle & Reason */
+.status-cell-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* Crisp Solid Flat Green / Red Circles */
+.status-circle-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  box-shadow: none !important;
+}
+
+.status-circle-dot.listening {
+  background-color: #10B981;
+}
+
+.status-circle-dot.not-listening {
+  background-color: #E52E2E;
+}
+
+.status-text-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-text-label.listening {
+  color: #059669;
+}
+
+.status-text-label.not-listening {
+  color: #DC2626;
+}
+
+/* Tablet Layout Enhancements */
+@media (min-width: 600px) {
+  .midwife-team-container {
+    padding: 24px 32px;
+  }
+  .midwife-team-table {
+    min-width: 100%;
+  }
+}

@@ -96,7 +96,7 @@ body {
   color: #FFFFFF;
 }
 
-/* Zen SOS Mode */
+/* Zen SOS Mode (Mother App) */
 .device-wrapper.zen-sos-mode .status-bar {
   background-color: #E52E2E;
   color: #FFFFFF;
@@ -104,6 +104,51 @@ body {
 
 .device-wrapper.zen-sos-mode .status-bar svg {
   color: #FFFFFF;
+}
+
+/* Midwife Listening Mode: Full Green Viewport including Top Status Bar */
+.device-wrapper.midwife-listening-mode .status-bar {
+  background-color: var(--color-primary-teal) !important;
+  color: #FFFFFF !important;
+}
+
+.device-wrapper.midwife-listening-mode .status-bar svg {
+  color: #FFFFFF !important;
+}
+
+/* Midwife On-Call Active State: Top area returns to Pure White */
+.device-wrapper.midwife-call-active,
+.device-wrapper.midwife-call-active .status-bar {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+.device-wrapper.midwife-call-active .status-bar svg {
+  color: #0F172A !important;
+}
+
+.device-wrapper.midwife-call-active .app-screen {
+  background-color: #FFFFFF !important;
+}
+
+/* Mother App Video Mode: Top part of the screen remains Pure White */
+.device-wrapper:has(#video-screen-overlay.active) .status-bar {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+.device-wrapper:has(#video-screen-overlay.active) .status-bar svg {
+  color: #0F172A !important;
+}
+
+/* Midwife App Video Mode */
+.device-wrapper:has(#midwife-video-overlay.active) .status-bar {
+  background-color: transparent !important;
+  color: #FFFFFF !important;
+}
+
+.device-wrapper:has(#midwife-video-overlay.active) .status-bar svg {
+  color: #FFFFFF !important;
 }
 
 .status-time {
@@ -133,6 +178,10 @@ body {
 
 .device-wrapper.zen-sos-mode .app-screen {
   background-color: #E52E2E;
+}
+
+.device-wrapper.midwife-listening-mode .app-screen {
+  background-color: var(--color-primary-teal) !important;
 }
 
 /* Header & Pagination Fade Out in Zen Mode */
@@ -176,8 +225,9 @@ body {
 }
 
 .device-wrapper.drawer-open .home-indicator,
-.device-wrapper.zen-sos-mode .home-indicator {
-  background-color: #FFFFFF;
+.device-wrapper.zen-sos-mode .home-indicator,
+.device-wrapper.midwife-listening-mode .home-indicator {
+  background-color: #FFFFFF !important;
   opacity: 0.6;
 }
 

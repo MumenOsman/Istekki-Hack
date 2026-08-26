@@ -1,0 +1,545 @@
+/* =========================================================
+   791 Midwife App - Minimal Incoming & Connected Call Screens
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. Incoming Call Screen Overlay
+   --------------------------------------------------------- */
+.midwife-call-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  z-index: 450;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 48px 28px 48px 28px;
+  box-sizing: border-box;
+  color: #0F172A;
+}
+
+.midwife-call-overlay.active {
+  display: flex;
+}
+
+/* Upward Elapsed Timer Badge */
+.incoming-countdown-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FEF2F2;
+  border: 1.5px solid #FCA5A5;
+  color: var(--color-sos-red);
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  box-shadow: 0 2px 8px rgba(229, 46, 46, 0.12);
+}
+
+.countdown-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-sos-red);
+}
+
+/* Center Patient Clinical Info */
+.midwife-call-center-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  margin: auto 0;
+  width: 100%;
+}
+
+.patient-name-title {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--color-primary-teal);
+  margin: 0;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+.patient-age-label {
+  font-size: 22px;
+  font-weight: 600;
+  color: #475569;
+  margin: 0;
+}
+
+/* Clinical Week & Parity Info */
+.clinical-data-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.clinical-data-text {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: -0.3px;
+}
+
+/* Call Actions Buttons (Accept & Transfer) */
+.midwife-call-actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 280px;
+  margin-bottom: 8px;
+}
+
+.call-action-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.midwife-call-action-btn {
+  width: 76px;
+  height: 76px;
+  min-width: 76px;
+  min-height: 76px;
+  max-width: 76px;
+  max-height: 76px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  user-select: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.midwife-call-action-btn:hover {
+  filter: brightness(1.05);
+}
+
+.midwife-call-action-btn:active {
+  transform: scale(0.95);
+}
+
+.midwife-call-action-btn svg {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  max-width: 32px;
+  max-height: 32px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.midwife-call-action-btn.accept {
+  background-color: var(--color-primary-teal);
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px rgba(0, 137, 123, 0.35);
+}
+
+.midwife-call-action-btn.transfer {
+  background-color: #F59E0B;
+  color: #FFFFFF !important;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+}
+
+.call-action-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #475569;
+}
+
+/* ---------------------------------------------------------
+   2. Transfer Explanation Prompt Modal
+   --------------------------------------------------------- */
+.midwife-transfer-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  border-radius: 0 0 50px 50px;
+}
+
+.midwife-transfer-modal-overlay.active {
+  display: flex;
+}
+
+.midwife-transfer-modal-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 24px 20px;
+  width: 100%;
+  max-width: 330px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.transfer-modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.transfer-modal-subtitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748B;
+  margin: -4px 0 2px 0;
+}
+
+.transfer-input {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  border: 1.5px solid #CBD5E1;
+  background-color: #F8FAFC;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0F172A;
+  outline: none;
+  font-family: var(--font-family);
+  box-sizing: border-box;
+}
+
+.transfer-input:focus {
+  border-color: var(--color-primary-teal);
+  background-color: #FFFFFF;
+}
+
+.transfer-quick-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.transfer-tag-btn {
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.transfer-tag-btn:hover {
+  background: #E0F2F1;
+  color: var(--color-primary-teal);
+  border-color: var(--color-primary-teal);
+}
+
+.transfer-submit-btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  background-color: var(--color-primary-teal);
+  color: #FFFFFF !important;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 137, 123, 0.25);
+  margin-top: 4px;
+}
+
+.transfer-submit-btn:active {
+  transform: scale(0.98);
+}
+
+/* ---------------------------------------------------------
+   3. Connected Answering Call Screen (Clean White Surface)
+   --------------------------------------------------------- */
+.midwife-connected-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  z-index: 460;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 48px 20px 24px 20px;
+  box-sizing: border-box;
+  color: #0F172A;
+}
+
+.midwife-connected-overlay.active {
+  display: flex;
+}
+
+.connected-timer-badge {
+  background: #E0F2F1;
+  color: var(--color-primary-teal);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 6px 18px;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Retained Patient Clinical Information */
+.connected-patient-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  margin: auto 0;
+  width: 100%;
+}
+
+/* ---------------------------------------------------------
+   Connected Controls Docks (Dual Flat Brand Green Docks)
+   --------------------------------------------------------- */
+.connected-docks-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  z-index: 20;
+}
+
+/* Upper Secondary Dock (White with strokes around dock and buttons) */
+.connected-triage-dock {
+  width: 100%;
+  max-width: 340px;
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1;
+  border-radius: 34px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.triage-dock-btn {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  color: var(--color-primary-teal) !important;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  box-shadow: none;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.triage-dock-btn:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+}
+
+.triage-dock-btn:active {
+  transform: scale(0.95);
+}
+
+.triage-dock-btn svg {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  stroke: var(--color-primary-teal);
+}
+
+.triage-dock-btn.selected {
+  background: #E0F2F1 !important;
+  color: #004D40 !important;
+  border-color: var(--color-primary-teal) !important;
+  box-shadow: 0 0 0 1.5px var(--color-primary-teal);
+}
+
+.triage-dock-btn.selected svg {
+  stroke: #004D40 !important;
+}
+
+/* Hang Up Button on New Dock (Identical to previous dock: Solid Red with white handset) */
+.triage-dock-btn.hangup-item {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
+  border-radius: 50%;
+  background-color: var(--color-sos-red) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #DC2626;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.1s ease, filter 0.15s ease, box-shadow 0.15s ease;
+}
+
+.triage-dock-btn.hangup-item:hover {
+  filter: brightness(1.05);
+}
+
+.triage-dock-btn.hangup-item:active {
+  transform: scale(0.95);
+}
+
+.triage-dock-btn.hangup-item svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  fill: #FFFFFF !important;
+  stroke: none !important;
+}
+
+.triage-dock-btn.hangup-item.selected {
+  background-color: #DC2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.4);
+  border-color: #B91C1C !important;
+}
+
+.triage-dock-btn.hangup-item.selected svg {
+  fill: #FFFFFF !important;
+}
+
+/* Primary Lower Dock */
+.connected-dock-container {
+  width: 100%;
+  max-width: 340px;
+  background: var(--color-primary-teal); /* Brand Green #00897B */
+  border-radius: 34px;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: none; /* Removed 3D floating effect */
+  margin-bottom: 0;
+  box-sizing: border-box;
+  border: none;
+}
+
+/* Action Circles: Flat White circles with Green icons */
+.dock-action-btn {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: none;
+  color: var(--color-primary-teal) !important;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  box-shadow: none;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dock-action-btn:hover {
+  filter: brightness(0.96);
+}
+
+.dock-action-btn:active {
+  transform: scale(0.95);
+}
+
+.dock-action-btn.active-toggle {
+  background: #E0F2F1 !important;
+  color: #004D40 !important;
+}
+
+.dock-action-btn.active-toggle svg {
+  stroke: #004D40 !important;
+}
+
+.dock-action-btn svg {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  stroke: var(--color-primary-teal);
+}
+
+/* Hang Up Button: Flat Solid Red circle with Identical Mother Handset icon */
+.dock-end-btn {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
+  border-radius: 50%;
+  background-color: var(--color-sos-red);
+  color: #FFFFFF !important;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.dock-end-btn:hover {
+  filter: brightness(1.05);
+}
+
+.dock-end-btn:active {
+  transform: scale(0.95);
+}
+
+.dock-end-btn svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  fill: #FFFFFF;
+  stroke: none;
+}

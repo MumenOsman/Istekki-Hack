@@ -1,6 +1,5 @@
 /* =========================================================
-   791 Video Call Triage Screen (iPhone 17 - 6.png)
-   Instant Switch Without Slide Animation
+   791 Video Call Triage Screen (Mother App & Midwife App)
    ========================================================= */
 
 .video-screen-overlay {
@@ -9,7 +8,7 @@
   width: 100%;
   height: 100%;
   background-color: #0F172A;
-  z-index: 250;
+  z-index: 470;
   display: none;
   pointer-events: none;
   overflow: hidden;
@@ -21,10 +20,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   pointer-events: auto;
+  padding: 48px 20px 24px 20px;
 }
 
-/* Full-Screen Main Video Viewport (Midwife Feed: Laura Hakala) */
+/* Full-Screen Main Video Viewport */
 .video-feed-container {
   position: absolute;
   inset: 0;
@@ -47,43 +48,47 @@
   padding: 20px;
 }
 
-.video-midwife-avatar {
-  width: 130px;
-  height: 130px;
-  color: #38BDF8;
-  background: rgba(56, 189, 248, 0.1);
-  border: 3px solid rgba(56, 189, 248, 0.3);
+.video-midwife-avatar,
+.video-patient-avatar {
+  width: 110px;
+  height: 110px;
+  color: var(--color-primary-teal);
+  background: rgba(0, 137, 123, 0.15);
+  border: 2.5px solid var(--color-primary-teal);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  margin-bottom: 14px;
 }
 
-.video-midwife-avatar svg {
-  width: 75px;
-  height: 75px;
+.video-midwife-avatar svg,
+.video-patient-avatar svg {
+  width: 60px;
+  height: 60px;
 }
 
-.video-midwife-name {
+.video-midwife-name,
+.video-patient-name {
   color: #FFFFFF;
   font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.3px;
   line-height: 1.2;
+  margin: 0;
 }
 
-.video-midwife-role {
-  color: #38BDF8;
+.video-midwife-role,
+.video-patient-role {
+  color: #2DD4BF;
   font-size: 14px;
   font-weight: 600;
   margin-top: 4px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
-.video-midwife-facility {
+.video-midwife-facility,
+.video-patient-facility {
   color: #94A3B8;
   font-size: 13px;
   font-weight: 500;
@@ -94,15 +99,10 @@
 .video-top-header {
   position: relative;
   width: 100%;
-  padding: 14px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 20;
-}
-
-.video-header-spacer {
-  width: 44px;
 }
 
 .video-top-header .call-timer-badge {
@@ -113,12 +113,13 @@
   padding: 6px 18px;
   font-size: 15px;
   font-weight: 600;
+  border-radius: 100px;
 }
 
-/* Crisp Camera Flip Button */
+/* Camera Flip Button */
 .video-flip-camera-btn {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(8px);
@@ -131,32 +132,28 @@
   outline: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.15s ease, background-color 0.15s ease;
+  transition: transform 0.15s ease;
 }
 
 .video-flip-camera-btn:active {
-  transform: scale(0.9);
-  background: rgba(15, 23, 42, 0.95);
+  transform: scale(0.92);
 }
 
 .video-flip-camera-btn svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
 }
 
-/* Floating Picture-in-Picture (PiP) Mother / Self Window */
+/* Floating Picture-in-Picture (PiP) Window (Raised above dock) */
 .video-pip-window {
   position: absolute;
   right: 18px;
-  bottom: 125px;
-  width: 112px;
-  height: 156px;
-  background: #1E293B;
+  bottom: 142px; /* Raised above the bottom dock for clear visibility */
+  width: 108px;
+  height: 148px;
   border-radius: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-  z-index: 10;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  z-index: 15;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -165,13 +162,14 @@
   text-align: center;
   padding: 8px;
   background: linear-gradient(180deg, #334155 0%, #0F172A 100%);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
 .video-pip-avatar {
-  width: 48px;
-  height: 48px;
-  color: #F87171;
-  background: rgba(239, 68, 68, 0.15);
+  width: 44px;
+  height: 44px;
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.15);
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -179,8 +177,8 @@
 }
 
 .video-pip-avatar svg {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
 }
 
 .video-pip-name {
@@ -192,28 +190,195 @@
 }
 
 .video-pip-role {
-  color: #FCA5A5;
+  color: #94A3B8;
   font-size: 9px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
 
-/* Bottom Video Controls Dock */
+/* ---------------------------------------------------------
+   Bottom Video Controls Dock (Flat Brand Green Surface)
+   --------------------------------------------------------- */
 .video-controls-dock {
   position: relative;
   width: 100%;
-  margin: 0;
-  background-color: var(--color-primary-teal);
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
-  padding: 22px 16px 36px 16px;
+  max-width: 340px;
+  background: var(--color-primary-teal);
+  border-radius: 34px;
+  padding: 14px 20px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.25);
   z-index: 20;
+  box-shadow: none;
+  margin-bottom: 8px;
+  border: none;
+}
+
+/* Action Circles inside Video Dock */
+.video-controls-dock .dock-action-btn,
+.video-controls-dock .call-action-btn {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: none;
+  color: var(--color-primary-teal) !important;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  box-shadow: none;
+  transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.video-controls-dock .dock-action-btn:hover,
+.video-controls-dock .call-action-btn:hover {
+  filter: brightness(0.96);
+}
+
+.video-controls-dock .dock-action-btn:active,
+.video-controls-dock .call-action-btn:active {
+  transform: scale(0.95);
+}
+
+.video-controls-dock .dock-action-btn.active-toggle,
+.video-controls-dock .call-action-btn.active-toggle {
+  background: #E0F2F1 !important;
+  color: #004D40 !important;
+}
+
+.video-controls-dock .dock-action-btn.active-toggle svg,
+.video-controls-dock .call-action-btn.active-toggle svg {
+  stroke: #004D40 !important;
+}
+
+.video-controls-dock .dock-action-btn svg,
+.video-controls-dock .call-action-btn svg {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  stroke: var(--color-primary-teal);
+}
+
+/* End Call Button inside Video Dock */
+.video-controls-dock .dock-end-btn,
+.video-controls-dock .call-action-btn.end-call-btn {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
+  border-radius: 50%;
+  background-color: var(--color-sos-red);
+  color: #FFFFFF !important;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.video-controls-dock .dock-end-btn:hover,
+.video-controls-dock .call-action-btn.end-call-btn:hover {
+  filter: brightness(1.05);
+}
+
+.video-controls-dock .dock-end-btn:active,
+.video-controls-dock .call-action-btn.end-call-btn:active {
+  transform: scale(0.95);
+}
+
+.video-controls-dock .dock-end-btn svg,
+.video-controls-dock .call-action-btn.end-call-btn svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  fill: #FFFFFF;
+  stroke: none;
+}
+
+/* Video Request Prompt Modal Overlay */
+.video-request-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 520;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  border-radius: 0 0 50px 50px;
+}
+
+.video-request-modal-overlay.active {
+  display: flex;
+}
+
+.video-request-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 24px 20px;
+  width: 100%;
+  max-width: 330px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.video-request-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.video-request-subtitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748B;
+  margin: -4px 0 6px 0;
+  line-height: 1.35;
+}
+
+.video-request-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.video-request-btn {
+  flex: 1;
+  height: 46px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.video-request-btn.accept {
+  background-color: var(--color-primary-teal);
+  color: #FFFFFF !important;
+}
+
+.video-request-btn.decline {
+  background-color: #F1F5F9;
+  color: #475569;
 }

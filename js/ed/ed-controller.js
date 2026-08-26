@@ -76,7 +76,7 @@ function handleBusEvent(data) {
     activateIncident(data.startTime || Date.now());
     addLogEntry('Incoming 791 Maternal SOS alert received from Juontotie 8, Kuopio');
   } else if (data.type === 'CALL_ANSWERED') {
-    updateMidwifeState('Connected on call with Mother (Maria Nieminen)');
+    updateMidwifeState('Connected on call with Mother (Sofia Korhonen)');
     addLogEntry('Midwife Laura Hakala answered triage call with Mother');
   } else if (data.type === 'CALL_TRANSFERRED') {
     updateMidwifeState(`Transferred to: ${data.newResponder?.name || 'Sari Korhonen'}`);
@@ -105,7 +105,7 @@ export function activateIncident(startTime) {
   }
   if (alertCode) {
     alertCode.className = 'alert-code code-blue';
-    alertCode.textContent = '791 Triage Alert &bull; In Progress';
+    alertCode.textContent = '791 Triage Alert • In Progress';
   }
   if (alertHeadline) {
     alertHeadline.textContent = 'Maternal Triage Active — Juontotie 8, Kuopio';
@@ -124,7 +124,7 @@ export function setMidwifeRecommendation(action) {
     if (banner) banner.className = 'ed-alert-banner emergency';
     if (alertCode) {
       alertCode.className = 'alert-code code-red';
-      alertCode.textContent = 'CODE A (RED) &bull; Urgent EMS Required';
+      alertCode.textContent = 'CODE A (RED) • Urgent EMS Required';
     }
     if (alertHeadline) {
       alertHeadline.textContent = 'Imminent Out-of-Hospital Delivery Risk';
@@ -141,7 +141,7 @@ export function setMidwifeRecommendation(action) {
     if (banner) banner.className = 'ed-alert-banner observing';
     if (alertCode) {
       alertCode.className = 'alert-code code-amber';
-      alertCode.textContent = 'CODE C (AMBER) &bull; Home Observation';
+      alertCode.textContent = 'CODE C (AMBER) • Home Observation';
     }
     if (alertHeadline) {
       alertHeadline.textContent = 'Observation / Progress Monitoring';
@@ -167,7 +167,7 @@ export function confirmAmbulanceDispatch() {
 
   if (dispatchBtn) {
     dispatchBtn.className = 'btn-dispatch-ambulance dispatched';
-    dispatchBtn.innerHTML = `<span>&#10003;</span> Unit ENS-121 Dispatched &bull; En Route (ETA ~8m)`;
+    dispatchBtn.innerHTML = `<span>&#10003;</span> Unit ENS-121 Dispatched • En Route (ETA ~8m)`;
     dispatchBtn.disabled = true;
   }
 

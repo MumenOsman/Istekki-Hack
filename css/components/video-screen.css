@@ -144,11 +144,11 @@
   height: 22px;
 }
 
-/* Floating Picture-in-Picture (PiP) Window (Raised above dock) */
+/* Floating Picture-in-Picture (PiP) Window */
 .video-pip-window {
   position: absolute;
   right: 18px;
-  bottom: 142px; /* Raised above the bottom dock for clear visibility */
+  bottom: 142px;
   width: 108px;
   height: 148px;
   border-radius: 16px;
@@ -160,46 +160,72 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 8px;
-  background: linear-gradient(180deg, #334155 0%, #0F172A 100%);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  padding: 10px 8px;
+  background: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  font-family: var(--font-family);
+  box-sizing: border-box;
+}
+
+/* Elevate PiP on Midwife screen to accommodate dual docks */
+#midwife-video-overlay .video-pip-window {
+  bottom: 220px;
 }
 
 .video-pip-avatar {
-  width: 44px;
-  height: 44px;
-  color: #38BDF8;
-  background: rgba(56, 189, 248, 0.15);
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
   border-radius: 50%;
+  color: #2DD4BF;
+  background: rgba(45, 212, 191, 0.16);
+  border: 1.5px solid #2DD4BF;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 8px;
 }
 
 .video-pip-avatar svg {
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
+  fill: currentColor;
 }
 
 .video-pip-name {
   color: #FFFFFF;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  margin-top: 6px;
-  line-height: 1.2;
+  margin: 0;
+  line-height: 1.25;
+  font-family: var(--font-family);
 }
 
 .video-pip-role {
-  color: #94A3B8;
-  font-size: 9px;
+  color: #2DD4BF;
+  font-size: 10px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
+  margin-top: 2px;
+  letter-spacing: 0.2px;
+  font-family: var(--font-family);
 }
 
 /* ---------------------------------------------------------
-   Bottom Video Controls Dock (Flat Brand Green Surface)
+   Bottom Video Controls Docks Wrapper & Lower Video Dock
    --------------------------------------------------------- */
+.video-docks-wrapper {
+  position: absolute;
+  bottom: 20px;
+  width: calc(100% - 48px);
+  max-width: 342px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  z-index: 25;
+}
+
 .video-controls-dock {
   position: relative;
   width: 100%;
@@ -213,7 +239,7 @@
   box-sizing: border-box;
   z-index: 20;
   box-shadow: none;
-  margin-bottom: 8px;
+  margin-bottom: 0;
   border: none;
 }
 

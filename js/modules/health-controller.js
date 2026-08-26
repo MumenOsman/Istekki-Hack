@@ -15,7 +15,7 @@ export const MEDICAL_REPORTS = [
     summary: 'Normal third-trimester progression. Cephalic presentation confirmed.',
     htmlContent: `
       <table class="clinical-meta-table">
-        <tr><td class="clinical-meta-label">Patient:</td><td class="clinical-meta-value">Maria Nieminen (210495-XXXX)</td></tr>
+        <tr><td class="clinical-meta-label">Patient:</td><td class="clinical-meta-value">Sofia Korhonen (210495-XXXX)</td></tr>
         <tr><td class="clinical-meta-label">Date & Time:</td><td class="clinical-meta-value">12.08.2026 at 10:15</td></tr>
         <tr><td class="clinical-meta-label">Organization:</td><td class="clinical-meta-value">Pohjois-Savon hyvinvointialue / Niiralan neuvola</td></tr>
         <tr><td class="clinical-meta-label">Practitioner:</td><td class="clinical-meta-value">Laura Hakala, Terveydenhoitaja / Kätilö</td></tr>
@@ -63,7 +63,7 @@ Next scheduled appointment: 26.08.2026 at Niiralan neuvola.
     summary: 'B-Hb 128 g/l (Normal), P-Ferrit 42 µg/l (Adequate reserves).',
     htmlContent: `
       <table class="clinical-meta-table">
-        <tr><td class="clinical-meta-label">Patient:</td><td class="clinical-meta-value">Maria Nieminen (210495-XXXX)</td></tr>
+        <tr><td class="clinical-meta-label">Patient:</td><td class="clinical-meta-value">Sofia Korhonen (210495-XXXX)</td></tr>
         <tr><td class="clinical-meta-label">Sample Time:</td><td class="clinical-meta-value">04.08.2026 at 08:30</td></tr>
         <tr><td class="clinical-meta-label">Laboratory:</td><td class="clinical-meta-value">ISLAB Kuopio Keskuslaboratorio</td></tr>
         <tr><td class="clinical-meta-label">Referring Unit:</td><td class="clinical-meta-value">Niiralan neuvola (Laura Hakala)</td></tr>
@@ -110,7 +110,7 @@ Red blood cell parameters within physiological pregnancy ranges. No signs of ane
     summary: 'Estimated fetal weight: 1980g (+1.1 SD). Amniotic fluid AFI 14.2 cm (Normal).',
     htmlContent: `
       <table class="clinical-meta-table">
-        <tr><td class="clinical-meta-label">Patient:</td><td class="clinical-meta-value">Maria Nieminen (210495-XXXX)</td></tr>
+        <tr><td class="clinical-meta-label">Patient:</td><td class="clinical-meta-value">Sofia Korhonen (210495-XXXX)</td></tr>
         <tr><td class="clinical-meta-label">Examination Date:</td><td class="clinical-meta-value">15.07.2026 at 13:00</td></tr>
         <tr><td class="clinical-meta-label">Unit:</td><td class="clinical-meta-value">Kuopion yliopistollinen sairaala / Naistenkeskus</td></tr>
         <tr><td class="clinical-meta-label">Physician:</td><td class="clinical-meta-value">Dr. Antti Rissanen (Erikoislääkäri)</td></tr>
@@ -152,7 +152,7 @@ Normally developing fetus matching gestational age. Normal fetal anatomy and amn
     summary: 'Fasting: 4.6 mmol/l, 1h: 6.8 mmol/l, 2h: 5.4 mmol/l - Normal screening.',
     htmlContent: `
       <table class="clinical-meta-table">
-        <tr><td class="clinical-meta-label">Patient:</td><td class="clinical-meta-value">Maria Nieminen (210495-XXXX)</td></tr>
+        <tr><td class="clinical-meta-label">Patient:</td><td class="clinical-meta-value">Sofia Korhonen (210495-XXXX)</td></tr>
         <tr><td class="clinical-meta-label">Date & Time:</td><td class="clinical-meta-value">18.06.2026 at 09:00</td></tr>
         <tr><td class="clinical-meta-label">Test Type:</td><td class="clinical-meta-value">75g Oral Glucose Tolerance Test (Raskauden glukoosirasituskoe)</td></tr>
       </table>

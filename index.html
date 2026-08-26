@@ -220,7 +220,7 @@
         <div class="profile-body">
           <div class="profile-field-group">
             <label class="profile-field-label" for="profile-name">Full Name</label>
-            <input type="text" class="profile-input disabled" id="profile-name" value="Maria Nieminen" disabled readonly>
+            <input type="text" class="profile-input disabled" id="profile-name" value="Sofia Korhonen" disabled readonly>
           </div>
 
           <div class="profile-field-group">
@@ -235,7 +235,7 @@
 
           <div class="profile-field-group">
             <label class="profile-field-label" for="profile-email">Email Address</label>
-            <input type="email" class="profile-input" id="profile-email" value="maria.nieminen@example.fi">
+            <input type="email" class="profile-input" id="profile-email" value="sofia.korhonen@example.fi">
           </div>
 
           <div class="profile-field-group">
@@ -249,7 +249,7 @@
 
           <div class="profile-field-group">
             <label class="profile-field-label" for="profile-emergency-name">Contact Name</label>
-            <input type="text" class="profile-input" id="profile-emergency-name" value="Mikko Nieminen (Spouse)">
+            <input type="text" class="profile-input" id="profile-emergency-name" value="Matti Korhonen (Spouse)">
           </div>
 
           <div class="profile-field-group">
@@ -392,7 +392,7 @@
             <div class="report-card-main">
               <span class="report-card-date">12.08.2026 at 10:15</span>
               <span class="report-card-title">Maternity Clinic Consultation (36+2 wk)</span>
-              <span class="report-card-issuer">Niiralan neuvola &bull; Laura Hakala</span>
+              <span class="report-card-issuer">Niiralan neuvola • Laura Hakala</span>
               <span class="report-card-tag clinic">Clinical Consultation</span>
             </div>
             <svg class="report-chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -404,7 +404,7 @@
             <div class="report-card-main">
               <span class="report-card-date">15.07.2026 at 13:00</span>
               <span class="report-card-title">Ultrasound Growth &amp; Biometry Scan (32 wk)</span>
-              <span class="report-card-issuer">KYS Naistenkeskus &bull; Dr. Antti Rissanen</span>
+              <span class="report-card-issuer">KYS Naistenkeskus • Dr. Antti Rissanen</span>
               <span class="report-card-tag clinic">Ultrasound Imaging</span>
             </div>
             <svg class="report-chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -648,9 +648,19 @@
 
         <div class="video-feed-container">
           <div class="video-stream-bg">
-            <div class="video-midwife-avatar">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 12c-4.42 0-8 2-8 4.5V20h16v-1.5c0-2.5-3.58-4.5-8-4.5z"/>
+            <div class="video-midwife-avatar" aria-label="Midwife Laura Hakala">
+              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="50" fill="#0D9488"/>
+                <!-- Head & Hair -->
+                <circle cx="50" cy="36" r="16" fill="#FBBF24"/>
+                <circle cx="50" cy="38" r="13" fill="#FED7AA"/>
+                <path d="M37 32 C37 23 63 23 63 32 C58 27 42 27 37 32 Z" fill="#D97706"/>
+                <!-- Medical Uniform -->
+                <path d="M20 86 C20 64 35 56 50 56 C65 56 80 64 80 86 Z" fill="#14B8A6"/>
+                <path d="M42 56 L50 68 L58 56 Z" fill="#FED7AA"/>
+                <!-- Stethoscope -->
+                <path d="M36 60 C36 74 44 78 50 78 C56 78 64 74 64 60" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <circle cx="50" cy="78" r="3.5" fill="#F8FAFC"/>
               </svg>
             </div>
             <h2 class="video-midwife-name">Laura Hakala</h2>
@@ -660,12 +670,20 @@
         </div>
 
         <div class="video-pip-window">
-          <div class="video-pip-avatar">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2a5 5 0 1 0 5 5 5 5 0 0 0-5-5zm0 12c-5.33 0-8 2.67-8 6v2h16v-2c0-3.33-2.67-6-8-6z"/>
+          <div class="video-pip-avatar" aria-label="Sofia Korhonen">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="50" fill="#C2410C"/>
+              <!-- Head & Hair -->
+              <circle cx="50" cy="36" r="16" fill="#78350F"/>
+              <circle cx="50" cy="39" r="13" fill="#FED7AA"/>
+              <path d="M34 35 C34 22 66 22 66 35 C66 46 64 52 62 56 C60 50 64 38 60 35 C55 30 45 30 40 35 C36 38 40 50 38 56 C36 52 34 46 34 35 Z" fill="#78350F"/>
+              <!-- Maternity Sweater -->
+              <path d="M20 86 C20 64 35 56 50 56 C65 56 80 64 80 86 Z" fill="#FB923C"/>
+              <path d="M42 58 Q 50 66 58 58" stroke="#FDE047" stroke-width="2" fill="none"/>
+              <circle cx="50" cy="64" r="2.5" fill="#FDE047"/>
             </svg>
           </div>
-          <span class="video-pip-name">Maria Nieminen</span>
+          <span class="video-pip-name">Sofia Korhonen</span>
           <span class="video-pip-role">You (38+4 wk)</span>
         </div>
 

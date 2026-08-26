@@ -17,7 +17,7 @@ let currentMotherData = null;
 let previousCallSource = 'audio'; // 'audio' | 'video'
 
 export const DEFAULT_MOTHER_DATA = {
-  name: 'Maria Nieminen',
+  name: 'Sofia Korhonen',
   age: '29',
   week: 'H38+1',
   parity: 'G2P1',
@@ -37,11 +37,17 @@ export function initMidwifeIncomingCallController() {
   const videoReportBtn = document.getElementById('midwife-video-report-btn');
   const videoToggleAudioBtn = document.getElementById('midwife-video-toggle-audio-btn');
 
-  // Upper Secondary Triage Dock Buttons (Left to Right: Hangup, Sand Timer, Ambulance, Microphone)
+  // Upper Secondary Triage Dock Buttons (Audio Screen)
   const triageHangupBtn = document.getElementById('triage-dock-hangup-btn');
   const triageTimerBtn = document.getElementById('triage-dock-timer-btn');
   const triageAmbulanceBtn = document.getElementById('triage-dock-ambulance-btn');
   const triageMicBtn = document.getElementById('triage-dock-mic-btn');
+
+  // Upper Secondary Triage Dock Buttons (Video Screen)
+  const videoTriageHangupBtn = document.getElementById('midwife-video-triage-hangup-btn');
+  const videoTriageTimerBtn = document.getElementById('midwife-video-triage-timer-btn');
+  const videoTriageAmbulanceBtn = document.getElementById('midwife-video-triage-ambulance-btn');
+  const videoTriageMicBtn = document.getElementById('midwife-video-triage-mic-btn');
 
   // Report Back Button
   const reportBackBtn = document.getElementById('midwife-report-back-btn');
@@ -94,73 +100,87 @@ export function initMidwifeIncomingCallController() {
   }
 
   // ---------------------------------------------------------
-  // Upper Triage Outcome Dock Button Selection Logic
+  // Upper Triage Outcome Dock Button Selection Logic (Synced across Audio & Video screens)
   // ---------------------------------------------------------
 
-  // 1. Microphone: Selected while pressed / toggled for muted conversation
-  if (triageMicBtn) {
-    triageMicBtn.addEventListener('click', () => {
-      const isMuted = triageMicBtn.classList.toggle('selected');
-      broadcastBusMessage({ type: 'MIDWIFE_MIC_TOGGLE', isMuted });
-      console.log('[791 Midwife] Microphone mute state:', isMuted ? 'MUTED' : 'UNMUTED');
-    });
+  function handleMicToggle() {
+    const isMuted = !triageMicBtn?.classList.contains('selected');
+    if (triageMicBtn) triageMicBtn.classList.toggle('selected', isMuted);
+    if (videoTriageMicBtn) videoTriageMicBtn.classList.toggle('selected', isMuted);
+    broadcastBusMessage({ type: 'MIDWIFE_MIC_TOGGLE', isMuted });
+    console.log('[791 Midwife] Microphone mute state:', isMuted ? 'MUTED' : 'UNMUTED');
   }
 
-  // 2. Ambulance: Selected when pressed, deselects Sand Timer and Hang Up
-  if (triageAmbulanceBtn) {
-    triageAmbulanceBtn.addEventListener('click', () => {
-      const wasSelected = triageAmbulanceBtn.classList.contains('selected');
-      if (wasSelected) {
-        triageAmbulanceBtn.classList.remove('selected');
-        broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'idle' });
-      } else {
-        triageAmbulanceBtn.classList.add('selected');
-        if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
-        if (triageHangupBtn) triageHangupBtn.classList.remove('selected', 'is-call-state');
-        broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'ambulance', midwife: 'Laura Hakala' });
-      }
-      console.log('[791 Midwife] Triage Outcome selected: AMBULANCE');
-    });
+  function handleAmbulanceClick() {
+    const wasSelected = triageAmbulanceBtn?.classList.contains('selected') || videoTriageAmbulanceBtn?.classList.contains('selected');
+    if (wasSelected) {
+      if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
+      if (videoTriageAmbulanceBtn) videoTriageAmbulanceBtn.classList.remove('selected');
+      broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'idle' });
+    } else {
+      if (triageAmbulanceBtn) triageAmbulanceBtn.classList.add('selected');
+      if (videoTriageAmbulanceBtn) videoTriageAmbulanceBtn.classList.add('selected');
+      if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
+      if (videoTriageTimerBtn) videoTriageTimerBtn.classList.remove('selected');
+      if (triageHangupBtn) triageHangupBtn.classList.remove('selected', 'is-call-state');
+      if (videoTriageHangupBtn) videoTriageHangupBtn.classList.remove('selected', 'is-call-state');
+      broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'ambulance', midwife: 'Laura Hakala' });
+    }
+    console.log('[791 Midwife] Triage Outcome selected: AMBULANCE');
   }
 
-  // 3. Sand Timer: Selected when pressed, deselects Ambulance and Hang Up
-  if (triageTimerBtn) {
-    triageTimerBtn.addEventListener('click', () => {
-      const wasSelected = triageTimerBtn.classList.contains('selected');
-      if (wasSelected) {
-        triageTimerBtn.classList.remove('selected');
-        broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'idle' });
-      } else {
-        triageTimerBtn.classList.add('selected');
-        if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
-        if (triageHangupBtn) triageHangupBtn.classList.remove('selected', 'is-call-state');
-        broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'wait', midwife: 'Laura Hakala' });
-      }
-      console.log('[791 Midwife] Triage Outcome selected: SAND TIMER / WAIT');
-    });
+  function handleTimerClick() {
+    const wasSelected = triageTimerBtn?.classList.contains('selected') || videoTriageTimerBtn?.classList.contains('selected');
+    if (wasSelected) {
+      if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
+      if (videoTriageTimerBtn) videoTriageTimerBtn.classList.remove('selected');
+      broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'idle' });
+    } else {
+      if (triageTimerBtn) triageTimerBtn.classList.add('selected');
+      if (videoTriageTimerBtn) videoTriageTimerBtn.classList.add('selected');
+      if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
+      if (videoTriageAmbulanceBtn) videoTriageAmbulanceBtn.classList.remove('selected');
+      if (triageHangupBtn) triageHangupBtn.classList.remove('selected', 'is-call-state');
+      if (videoTriageHangupBtn) videoTriageHangupBtn.classList.remove('selected', 'is-call-state');
+      broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'wait', midwife: 'Laura Hakala' });
+    }
+    console.log('[791 Midwife] Triage Outcome selected: SAND TIMER / WAIT');
   }
 
-  // 4. Hang Up / Call Toggle (Upper Dock):
-  // When Red (Hang Up) is clicked -> Disconnects/closes line with ED & turns Green (Call)
-  // When Green (Call) is clicked -> Connects/opens line with ED & turns Red (Hang Up)
-  if (triageHangupBtn) {
-    triageHangupBtn.addEventListener('click', () => {
-      const isCurrentlyGreenCall = triageHangupBtn.classList.contains('is-call-state');
-      if (isCurrentlyGreenCall) {
-        // User clicked Green Call button -> Connects to ED and transforms back to Red Hang Up
-        triageHangupBtn.classList.remove('is-call-state', 'selected');
-        broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: true });
-        console.log('[791 Midwife] Clicked Call (Green) -> Opened direct line with ED Dispatcher');
-      } else {
-        // User clicked Red Hang Up button -> Disconnects from ED and transforms into Green Call button
-        triageHangupBtn.classList.add('is-call-state', 'selected');
-        if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
-        if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
-        broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: false });
-        console.log('[791 Midwife] Clicked Hang Up (Red) -> Closed direct line with ED Dispatcher');
-      }
-    });
+  function handleHangupCallToggle() {
+    const isCurrentlyGreenCall = triageHangupBtn?.classList.contains('is-call-state') || videoTriageHangupBtn?.classList.contains('is-call-state');
+    if (isCurrentlyGreenCall) {
+      if (triageHangupBtn) triageHangupBtn.classList.remove('is-call-state', 'selected');
+      if (videoTriageHangupBtn) videoTriageHangupBtn.classList.remove('is-call-state', 'selected');
+      broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: true });
+      console.log('[791 Midwife] Clicked Call (Green) -> Opened direct line with ED Dispatcher');
+    } else {
+      if (triageHangupBtn) triageHangupBtn.classList.add('is-call-state', 'selected');
+      if (videoTriageHangupBtn) videoTriageHangupBtn.classList.add('is-call-state', 'selected');
+      if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
+      if (videoTriageAmbulanceBtn) videoTriageAmbulanceBtn.classList.remove('selected');
+      if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
+      if (videoTriageTimerBtn) videoTriageTimerBtn.classList.remove('selected');
+      broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: false });
+      console.log('[791 Midwife] Clicked Hang Up (Red) -> Closed direct line with ED Dispatcher');
+    }
   }
+
+  // 1. Microphone
+  if (triageMicBtn) triageMicBtn.addEventListener('click', handleMicToggle);
+  if (videoTriageMicBtn) videoTriageMicBtn.addEventListener('click', handleMicToggle);
+
+  // 2. Ambulance
+  if (triageAmbulanceBtn) triageAmbulanceBtn.addEventListener('click', handleAmbulanceClick);
+  if (videoTriageAmbulanceBtn) videoTriageAmbulanceBtn.addEventListener('click', handleAmbulanceClick);
+
+  // 3. Sand Timer
+  if (triageTimerBtn) triageTimerBtn.addEventListener('click', handleTimerClick);
+  if (videoTriageTimerBtn) videoTriageTimerBtn.addEventListener('click', handleTimerClick);
+
+  // 4. Hang Up / Call Toggle
+  if (triageHangupBtn) triageHangupBtn.addEventListener('click', handleHangupCallToggle);
+  if (videoTriageHangupBtn) videoTriageHangupBtn.addEventListener('click', handleHangupCallToggle);
 
   // ---------------------------------------------------------
   // Lower Primary Dock Buttons Handlers
@@ -297,7 +317,7 @@ export function showIncomingCall(motherData = DEFAULT_MOTHER_DATA, startTime = D
   const parityEl = document.getElementById('incoming-patient-parity');
   const deviceWrapper = document.querySelector('.device-wrapper');
 
-  if (nameEl) nameEl.textContent = motherData.name || 'Maria Nieminen';
+  if (nameEl) nameEl.textContent = motherData.name || 'Sofia Korhonen';
   if (ageEl) ageEl.textContent = `${motherData.age || '29'}`;
   if (weekEl) weekEl.textContent = motherData.week || 'H38+1';
   if (parityEl) parityEl.textContent = motherData.parity || 'G2P1';
@@ -407,7 +427,7 @@ export function answerCall() {
   const connectedWeekEl = document.getElementById('connected-patient-week');
   const connectedParityEl = document.getElementById('connected-patient-parity');
 
-  if (connectedNameEl) connectedNameEl.textContent = mother.name || 'Maria Nieminen';
+  if (connectedNameEl) connectedNameEl.textContent = mother.name || 'Sofia Korhonen';
   if (connectedAgeEl) connectedAgeEl.textContent = `${mother.age || '29'}`;
   if (connectedWeekEl) connectedWeekEl.textContent = mother.week || 'H38+1';
   if (connectedParityEl) connectedParityEl.textContent = mother.parity || 'G2P1';

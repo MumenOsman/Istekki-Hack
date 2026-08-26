@@ -6,7 +6,7 @@
 
 export const SAMPLE_CALL_LOGS = [
   {
-    patientName: 'Maria Nieminen',
+    patientName: 'Sofia Korhonen',
     time: 'Today 09:14',
     duration: '4m 12s',
     type: 'Video',
@@ -124,7 +124,7 @@ export function renderCallLogsTable() {
         <span class="call-time-text">${log.time}</span>
       </td>
       <td>
-        <span class="call-duration-text">${log.duration} &bull; ${log.type}</span>
+        <span class="call-duration-text">${log.duration} • ${log.type}</span>
       </td>
       <td>
         <span class="log-outcome-badge ${log.outcomeClass}">${log.outcome}</span>

@@ -15,24 +15,24 @@ let broadcastBus = null;
 
 try {
   broadcastBus = new BroadcastChannel('791_emergency_bus');
-  // Listen for Midwife answering the call early
+  // Listen for Midwife answering the call
   broadcastBus.onmessage = (event) => {
     if (event.data?.type === 'CALL_ANSWERED') {
-      console.log('[791 SOS] Midwife answered early! Connecting call.');
-      onMidwifeAnsweredEarly(event.data.responder);
+      console.log('[791 SOS] Midwife answered! Connecting call.');
+      onMidwifeAnswered(event.data.responder);
     }
   };
 } catch (e) {
   console.warn('[791 SOS] BroadcastChannel not supported:', e);
 }
 
-// Storage event listener for answering early
+// Storage event listener for answering
 window.addEventListener('storage', (e) => {
   if (e.key === '791_emergency_sync' && e.newValue) {
     try {
       const data = JSON.parse(e.newValue);
       if (data.type === 'CALL_ANSWERED') {
-        onMidwifeAnsweredEarly(data.responder);
+        onMidwifeAnswered(data.responder);
       }
     } catch (err) {
       // ignore
@@ -48,8 +48,8 @@ export function initSOSController() {
 }
 
 function handleSOSClick() {
-  if (state.callStatus === 'connecting') {
-    // Already in 10s connecting countdown -> Cancel and return to original state
+  if (state.callStatus === 'connecting' || state.callStatus === 'calling') {
+    // In countdown or ringing -> Cancel and return to original state
     cancelSOSCountdown();
   } else {
     // Start 10s connecting countdown
@@ -85,7 +85,7 @@ function startSOSCountdown() {
 
   // Broadcast call initiation IMMEDIATELY to Midwife with 10-second timer
   const motherPayload = {
-    name: state.motherInfo.name || 'Maria Nieminen',
+    name: state.motherInfo.name || 'Sofia Korhonen',
     age: `${state.motherInfo.age || 29}`,
     week: 'H38+1',
     parity: 'G2P1',
@@ -158,7 +158,7 @@ export function cancelSOSCountdown() {
   console.log('[791 SOS] Zen Mode cancelled. Reset to original state.');
 }
 
-function onMidwifeAnsweredEarly(responder) {
+function onMidwifeAnswered(responder) {
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
     animationFrameId = null;
@@ -180,11 +180,21 @@ function onMidwifeAnsweredEarly(responder) {
 }
 
 function onSOSCountdownComplete() {
-  state.callStatus = 'connected';
-  console.log('[791 SOS] 10s Countdown completed! Emergency connection established.');
+  // 10s countdown completed -> Return text to 'SOS' and keep progress ring repeating
+  state.callStatus = 'calling';
+  console.log('[791 SOS] 10s Countdown completed. Full text returns to SOS, looping progress bar...');
+
+  const titleEl = document.getElementById('sos-title');
+  const subtitleEl = document.getElementById('sos-subtitle');
+  const progressFill = document.getElementById('sos-progress-fill');
+  const circumference = 2 * Math.PI * 140;
+
+  // Restore exact original title 'SOS' and subtitle 'Calling Emergency'
+  if (titleEl) titleEl.textContent = 'SOS';
+  if (subtitleEl) subtitleEl.textContent = 'Calling Emergency';
 
   const motherPayload = {
-    name: state.motherInfo.name || 'Maria Nieminen',
+    name: state.motherInfo.name || 'Sofia Korhonen',
     age: `${state.motherInfo.age || 29}`,
     week: 'H38+1',
     parity: 'G2P1',
@@ -197,12 +207,22 @@ function onSOSCountdownComplete() {
     timestamp: new Date().toISOString()
   });
 
-  window.dispatchEvent(new CustomEvent('sos:connected', { 
-    detail: { 
-      timestamp: new Date().toISOString(),
-      motherInfo: state.motherInfo 
-    } 
-  }));
+  // Loop the green progress bar continuously while waiting for midwife to answer
+  const RING_LOOP_DURATION_MS = 2500;
+  const loopStartTime = Date.now();
+
+  function updateRingingLoop() {
+    if (state.callStatus !== 'calling') return;
+    const elapsed = Date.now() - loopStartTime;
+    const progress = (elapsed % RING_LOOP_DURATION_MS) / RING_LOOP_DURATION_MS;
+    if (progressFill) {
+      const offset = circumference * (1 - progress);
+      progressFill.style.strokeDashoffset = `${offset}`;
+    }
+    animationFrameId = requestAnimationFrame(updateRingingLoop);
+  }
+
+  animationFrameId = requestAnimationFrame(updateRingingLoop);
 }
 
 function broadcastMessage(payload) {

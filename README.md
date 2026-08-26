@@ -66,7 +66,7 @@ To test the complete end-to-end emergency flow:
 
 2. **Trigger Mother SOS:**
    - On `index.html`, tap the large red **SOS** button.
-   - The Midwife app (`midwife.html`) immediately receives the incoming call screen with a live upward elapsed timer, displaying patient demographics (`Maria Nieminen`, `29`, `H38+1`, `G2P1`).
+   - The Midwife app (`midwife.html`) immediately receives the incoming call screen with a live upward elapsed timer, displaying patient demographics (`Sofia Korhonen`, `29`, `H38+1`, `G2P1`).
    - The ED Console (`ed.html`) simultaneously activates the incident mission card.
 
 3. **Answer Call on Midwife App:**
@@ -85,8 +85,8 @@ To test the complete end-to-end emergency flow:
 
 6. **Trigger Triage Escalation & Ambulance Dispatch:**
    - On `midwife.html`, inspect the upper triage dock:
-     - Tap **Ambulance (🚑)**: The ED console (`ed.html`) immediately flashes red with **"CODE A &bull; URGENT EMS REQUIRED"**.
-     - Tap **Sand Timer (⏳)**: The ED console updates to amber **"CODE C &bull; HOME OBSERVATION"**.
+     - Tap **Ambulance (🚑)**: The ED console (`ed.html`) immediately flashes red with **"CODE A • URGENT EMS REQUIRED"**.
+     - Tap **Sand Timer (⏳)**: The ED console updates to amber **"CODE C • HOME OBSERVATION"**.
      - Tap **Microphone (🎙️)**: Toggles the private muted backchannel between Midwife and ED.
    - On `ed.html`, click **"Confirm & Dispatch Ambulance"** to assign unit `ENS-121` and advance tracking to `En Route (ETA ~8m)`.
 

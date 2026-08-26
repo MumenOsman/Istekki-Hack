@@ -2,822 +2,207 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>791 Mother Emergency App</title>
-  
-  <!-- Google Font: Inter (All Weights) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>791 Emergency Demo — Live Console</title>
+
+  <!-- Google Font: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Leaflet OpenStreetMap CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Modular Stylesheets -->
   <link rel="stylesheet" href="css/design-tokens.css">
-  <link rel="stylesheet" href="css/device-frame.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/components/header.css">
-  <link rel="stylesheet" href="css/components/sos-button.css">
-  <link rel="stylesheet" href="css/components/nurse-screen.css">
-  <link rel="stylesheet" href="css/components/call-screen.css">
-  <link rel="stylesheet" href="css/components/video-screen.css">
-  <link rel="stylesheet" href="css/components/map-view.css">
-  <link rel="stylesheet" href="css/components/drawer.css">
-  <link rel="stylesheet" href="css/components/profile-screen.css">
-  <link rel="stylesheet" href="css/components/survey-screen.css">
-  <link rel="stylesheet" href="css/components/health-history.css">
-  <link rel="stylesheet" href="css/components/settings-screen.css">
-  <link rel="stylesheet" href="css/components/pagination.css">
-  <link rel="stylesheet" href="css/components/mother-login.css">
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-family);
+      background: linear-gradient(160deg, #F8FAFC 0%, #E0F2F1 100%);
+      color: var(--color-text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+    }
+
+    .landing {
+      width: 100%;
+      max-width: 1080px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-primary-teal-dark);
+      background: var(--color-primary-teal-light);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-sos-red);
+      box-shadow: 0 0 0 0 rgba(229, 46, 46, 0.6);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(229, 46, 46, 0.5); }
+      70% { box-shadow: 0 0 0 8px rgba(229, 46, 46, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(229, 46, 46, 0); }
+    }
+
+    h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+    }
+
+    p.subtitle {
+      font-size: 16px;
+      color: var(--color-text-muted);
+      max-width: 560px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      background: var(--color-bg-app);
+      border-radius: 20px;
+      padding: 36px 24px 28px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .card:hover, .card:focus-visible {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+    }
+
+    .card .icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card.mother .icon { background: var(--color-primary-teal-light); color: var(--color-primary-teal-dark); }
+    .card.midwife .icon { background: #FDE9E9; color: var(--color-sos-red); }
+    .card.ed .icon { background: #E8EAF6; color: #303F9F; }
+
+    .card .icon svg { width: 30px; height: 30px; }
+
+    .card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .card p {
+      font-size: 13.5px;
+      color: var(--color-text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .card .open-btn {
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-primary-teal-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card.midwife .open-btn { color: var(--color-sos-red); }
+    .card.ed .open-btn { color: #303F9F; }
+
+    .card .open-btn svg { width: 14px; height: 14px; }
+
+    footer {
+      font-size: 12.5px;
+      color: var(--color-text-muted);
+    }
+
+    footer strong { color: var(--color-text-main); }
+  </style>
 </head>
 <body>
+  <div class="landing">
+    <span class="eyebrow"><span class="dot"></span> Live Demo &bull; Hackathon Pitch</span>
+    <h1>791 Maternal Emergency Response</h1>
+    <p class="subtitle">
+      Open each role below in its own tab to try the live demo. All three apps stay in sync automatically —
+      trigger an SOS on the Mother app and watch it appear instantly on the Midwife and ED consoles.
+    </p>
 
+    <div class="cards">
+      <a class="card mother" href="mother.html" target="_blank" rel="noopener">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </span>
+        <h2>Mother App</h2>
+        <p>Patient view. Trigger the SOS button to start an emergency and request a triage call.</p>
+        <span class="open-btn">Open Mother App
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </span>
+      </a>
 
-  <!-- Mobile Device Simulation Frame -->
-  <div class="device-wrapper">
-    
-    <!-- Hardware Notch -->
-    <div class="notch">
-      <div class="notch-speaker"></div>
-      <div class="notch-camera"></div>
+      <a class="card midwife" href="midwife.html" target="_blank" rel="noopener">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.5 4.05 3 5.5l7 7Z"/></svg>
+        </span>
+        <h2>Midwife App</h2>
+        <p>Remote triage. Sign in (ID <strong>502941</strong> / <strong>password123</strong>), answer the call, and set a triage recommendation.</p>
+        <span class="open-btn">Open Midwife App
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </span>
+      </a>
+
+      <a class="card ed" href="ed.html" target="_blank" rel="noopener">
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 7v6c0 5.25 3.5 9.74 10 11 6.5-1.26 10-5.75 10-11V7l-10-5Z"/><path d="M9 12h6M12 9v6"/></svg>
+        </span>
+        <h2>ED / 112 Console</h2>
+        <p>Dispatch dashboard. Watch incidents and triage recommendations arrive live, then dispatch the ambulance.</p>
+        <span class="open-btn">Open ED Console
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </span>
+      </a>
     </div>
 
-    <!-- Status Bar (Flanking the Notch) -->
-    <div class="status-bar">
-      <span class="status-time" id="status-time">09:41</span>
-      
-      <div class="status-icons">
-        <!-- 5G / Signal Icon -->
-        <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor">
-          <rect x="0" y="8" width="3" height="3" rx="0.5"/>
-          <rect x="4.5" y="5.5" width="3" height="5.5" rx="0.5"/>
-          <rect x="9" y="3" width="3" height="8" rx="0.5"/>
-          <rect x="13.5" y="0" width="3" height="11" rx="0.5"/>
-        </svg>
-        <!-- Wi-Fi Icon -->
-        <svg width="15" height="11" viewBox="0 0 16 12" fill="currentColor">
-          <path d="M8 2.5C10.6 2.5 13 3.6 14.7 5.3L16 4C13.9 1.9 11.1 0.7 8 0.7C4.9 0.7 2.1 1.9 0 4L1.3 5.3C3 3.6 5.4 2.5 8 2.5ZM8 6.5C9.7 6.5 11.2 7.2 12.3 8.3L13.6 7C12.2 5.6 10.2 4.7 8 4.7C5.8 4.7 3.8 5.6 2.4 7L3.7 8.3C4.8 7.2 6.3 6.5 8 6.5ZM8 10C8.8 10 9.5 10.7 9.5 11.5C9.5 12.3 8.8 13 8 13C7.2 13 6.5 12.3 6.5 11.5C6.5 10.7 7.2 10 8 10Z"/>
-        </svg>
-        <!-- Battery Icon -->
-        <svg width="22" height="11" viewBox="0 0 24 12" fill="currentColor">
-          <rect x="1" y="1" width="19" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
-          <rect x="3" y="3" width="14" height="6" rx="1.5"/>
-          <path d="M21.5 4.5C22.3 4.8 23 5.5 23 6.5C23 7.5 22.3 8.2 21.5 8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-    </div>
-
-    <!-- Main Screen Viewport -->
-    <div class="app-screen">
-      
-      <!-- 0. Mother Sign-In View -->
-      <section class="mother-login-container" id="mother-login-view">
-        
-        <!-- Header -->
-        <div class="mother-login-header">
-          <h1 class="mother-app-title">791</h1>
-        </div>
-
-        <!-- Form with ID and Password -->
-        <form class="mother-login-form" id="mother-login-form">
-          
-          <div class="mother-form-group">
-            <label class="mother-form-label" for="mother-patient-id">ID</label>
-            <input type="text" class="mother-form-input" id="mother-patient-id" placeholder="Enter ID" value="290894-912X" required>
-          </div>
-
-          <div class="mother-form-group">
-            <label class="mother-form-label" for="mother-pin">Password</label>
-            <input type="password" class="mother-form-input" id="mother-pin" placeholder="Enter password" value="password123" required>
-          </div>
-
-          <button type="submit" class="mother-submit-btn" id="mother-submit-btn">
-            Sign in
-          </button>
-
-        </form>
-
-      </section>
-
-      <!-- Top Application Header -->
-      <header class="app-header">
-        <button class="menu-btn" id="menu-toggle-btn" aria-label="Open Navigation Menu">
-          <svg width="28" height="24" viewBox="0 0 28 24" fill="none">
-            <rect x="0" y="2" width="28" height="4" rx="2" fill="#00897B"/>
-            <rect x="0" y="10" width="28" height="4" rx="2" fill="#00897B"/>
-            <rect x="0" y="18" width="28" height="4" rx="2" fill="#00897B"/>
-          </svg>
-        </button>
-      </header>
-
-      <!-- Main Swipable Content Area -->
-      <main class="app-content">
-        <div class="screens-viewport" id="screens-viewport">
-          
-          <!-- Screen 0 (Left): Nurse & Healthcare Center Screen -->
-          <section class="screen-page" id="screen-nurse" aria-label="Nurse and Healthcare Center">
-            <div class="nurse-container">
-              
-              <!-- Clinic Info -->
-              <div class="clinic-info">
-                <div class="clinic-title-row">
-                  <svg class="clinic-pin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  <h1 class="clinic-name">Niiralan neuvola</h1>
-                </div>
-                <div class="clinic-address">Juontotie 8, 70150 Kuopio</div>
-              </div>
-
-              <!-- Action Buttons -->
-              <div class="nurse-actions">
-                <button class="nurse-btn" id="call-nurse-btn">Call Nurse</button>
-                <button class="nurse-btn" id="send-message-btn">Send Message</button>
-              </div>
-
-              <!-- Quick Map Floating Button (Opens Healthcare Explorer) -->
-              <button class="map-fab-btn" id="map-fab-btn" aria-label="Explore Healthcare Locations">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
-                  <line x1="8" y1="2" x2="8" y2="18"></line>
-                  <line x1="16" y1="6" x2="16" y2="22"></line>
-                </svg>
-              </button>
-
-            </div>
-          </section>
-
-          <!-- Screen 1 (Right): SOS Main Page -->
-          <section class="screen-page" id="screen-sos" aria-label="Emergency SOS">
-            <div class="sos-container">
-              <div class="sos-button-wrapper" id="sos-button-wrapper">
-                
-                <!-- Circular Countdown Progress Ring -->
-                <svg class="sos-progress-ring" viewBox="0 0 300 300">
-                  <circle class="sos-progress-ring-bg" cx="150" cy="150" r="140"></circle>
-                  <circle class="sos-progress-ring-fill" id="sos-progress-fill" cx="150" cy="150" r="140"></circle>
-                </svg>
-
-                <button class="sos-button" id="sos-button" aria-label="Call Emergency SOS">
-                  <span class="sos-title" id="sos-title">SOS</span>
-                  <span class="sos-subtitle" id="sos-subtitle">Call Emergency</span>
-                </button>
-
-              </div>
-            </div>
-          </section>
-
-        </div>
-      </main>
-
-      <!-- Bottom Pagination Indicator Dots -->
-      <footer class="pagination-container" aria-label="Page navigation">
-        <button class="dot" data-index="0" aria-label="Page 1: Healthcare Center"></button>
-        <button class="dot active" data-index="1" aria-label="Page 2: SOS Emergency"></button>
-      </footer>
-
-      <!-- Home Indicator Bar -->
-      <div class="home-indicator"></div>
-
-      <!-- Slide-Out Navigation Drawer (Full-Bleed Cover) -->
-      <nav class="drawer-overlay" id="drawer-menu" aria-label="Side Navigation Menu">
-        <div class="drawer-header">
-          <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Close Navigation Menu">
-            <svg width="28" height="24" viewBox="0 0 28 24" fill="none">
-              <rect x="0" y="2" width="28" height="4" rx="2" fill="#FFFFFF"/>
-              <rect x="0" y="10" width="28" height="4" rx="2" fill="#FFFFFF"/>
-              <rect x="0" y="18" width="28" height="4" rx="2" fill="#FFFFFF"/>
-            </svg>
-          </button>
-        </div>
-        <div class="drawer-menu-list">
-          <button class="drawer-menu-item" data-target="profile">Profile</button>
-          <button class="drawer-menu-item" data-target="health-history">Health History</button>
-          <button class="drawer-menu-item" data-target="settings">Settings</button>
-          <button class="drawer-menu-item" id="mother-menu-signout" data-target="signout" style="color: var(--color-sos-red);">Sign Out</button>
-        </div>
-        <div class="drawer-footer">
-          <div class="drawer-branding-title">791 Application</div>
-          <div class="drawer-branding-sub">Maternity Emergency &amp; Triage</div>
-        </div>
-      </nav>
-
-      <!-- Profile Screen Overlay (Triggered from Hamburger Drawer) -->
-      <section class="profile-screen-overlay" id="profile-screen-overlay" aria-label="User Profile">
-        <div class="profile-header">
-          <button class="profile-back-btn" id="profile-back-btn" aria-label="Back to Side Panel">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-          <h2 class="profile-header-title">Profile</h2>
-        </div>
-
-        <div class="profile-body">
-          <div class="profile-field-group">
-            <label class="profile-field-label" for="profile-name">Full Name</label>
-            <input type="text" class="profile-input disabled" id="profile-name" value="Sofia Korhonen" disabled readonly>
-          </div>
-
-          <div class="profile-field-group">
-            <label class="profile-field-label" for="profile-age">Age</label>
-            <input type="text" class="profile-input disabled" id="profile-age" value="29" disabled readonly>
-          </div>
-
-          <div class="profile-field-group">
-            <label class="profile-field-label" for="profile-address">Address</label>
-            <input type="text" class="profile-input disabled" id="profile-address" value="Juontotie 8, 70150 Kuopio" disabled readonly>
-          </div>
-
-          <div class="profile-field-group">
-            <label class="profile-field-label" for="profile-email">Email Address</label>
-            <input type="email" class="profile-input" id="profile-email" value="sofia.korhonen@example.fi">
-          </div>
-
-          <div class="profile-field-group">
-            <label class="profile-field-label" for="profile-phone">Phone Number</label>
-            <input type="tel" class="profile-input" id="profile-phone" value="+358 40 123 4567">
-          </div>
-
-          <div class="profile-section-divider">
-            <h3 class="profile-section-title">Emergency Contact</h3>
-          </div>
-
-          <div class="profile-field-group">
-            <label class="profile-field-label" for="profile-emergency-name">Contact Name</label>
-            <input type="text" class="profile-input" id="profile-emergency-name" value="Matti Korhonen (Spouse)">
-          </div>
-
-          <div class="profile-field-group">
-            <label class="profile-field-label" for="profile-emergency-phone">Contact Phone Number</label>
-            <input type="tel" class="profile-input" id="profile-emergency-phone" value="+358 50 987 6543">
-          </div>
-
-          <div class="profile-actions">
-            <button class="profile-auth-btn" id="profile-auth-btn" disabled>
-              <div class="profile-auth-check-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                </svg>
-              </div>
-              <span>Authentication Verified</span>
-            </button>
-
-            <button class="profile-survey-btn" id="profile-survey-btn">
-              <span class="profile-survey-text">Self Survey</span>
-              <span class="profile-survey-status-text">Not Completed</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Self Survey Assessment Screen Overlay -->
-      <section class="survey-screen-overlay" id="survey-screen-overlay" aria-label="Self Survey Triage Assessment">
-        <div class="survey-header">
-          <button class="survey-back-btn" id="survey-back-btn" aria-label="Back to Profile">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-          <h2 class="survey-header-title">Self Survey Assessment</h2>
-        </div>
-
-        <div class="survey-body">
-          <div class="survey-intro-card">
-            <div class="survey-intro-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-            </div>
-            <p class="survey-intro-text">
-              Your responses are encrypted and automatically shared with your on-duty midwife at KYS for delivery assessment.
-            </p>
-          </div>
-
-          <div class="survey-question-block">
-            <span class="survey-question-label">1. Contraction Frequency</span>
-            <span class="survey-question-sub">How often are contractions occurring?</span>
-            <div class="survey-options-grid">
-              <button class="survey-option-btn">&gt; 10 min apart</button>
-              <button class="survey-option-btn selected">5 - 10 min apart</button>
-              <button class="survey-option-btn">3 - 5 min apart</button>
-              <button class="survey-option-btn">&lt; 3 min / Constant</button>
-            </div>
-          </div>
-
-          <div class="survey-question-block">
-            <span class="survey-question-label">2. Contraction Duration</span>
-            <span class="survey-question-sub">How long does each wave last?</span>
-            <div class="survey-options-grid triple">
-              <button class="survey-option-btn">&lt; 30 sec</button>
-              <button class="survey-option-btn selected">30 - 60 sec</button>
-              <button class="survey-option-btn">&gt; 60 sec</button>
-            </div>
-          </div>
-
-          <div class="survey-question-block">
-            <span class="survey-question-label">3. Pain Level (1 to 10)</span>
-            <div class="pain-slider-wrapper">
-              <div class="pain-slider-header">
-                <span class="profile-field-label">Current Intensity:</span>
-                <span class="pain-value-badge" id="pain-value-badge">7 / 10</span>
-              </div>
-              <input type="range" class="pain-slider-input" id="pain-level-slider" min="1" max="10" value="7">
-              <div class="pain-slider-labels">
-                <span>1 - Mild</span>
-                <span>5 - Moderate</span>
-                <span>10 - Severe</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="survey-question-block">
-            <span class="survey-question-label">4. Water Break Status</span>
-            <span class="survey-question-sub">Has your water broken or amniotic sac leaked?</span>
-            <div class="survey-options-grid">
-              <button class="survey-option-btn">Not Broken</button>
-              <button class="survey-option-btn selected">Clear / Pale Pink</button>
-              <button class="survey-option-btn">Green / Brownish</button>
-              <button class="survey-option-btn">Unsure / Trickling</button>
-            </div>
-          </div>
-
-          <div class="survey-question-block">
-            <span class="survey-question-label">5. Fetal Movement</span>
-            <span class="survey-question-sub">Baby movement within the last 2 hours</span>
-            <div class="survey-options-grid triple">
-              <button class="survey-option-btn selected">Normal</button>
-              <button class="survey-option-btn">Reduced</button>
-              <button class="survey-option-btn">No Movement</button>
-            </div>
-          </div>
-
-          <div class="survey-question-block">
-            <label class="survey-question-label" for="survey-meds-input">6. Current Medications &amp; Additional Notes</label>
-            <textarea class="survey-textarea" id="survey-meds-input" placeholder="List any medications taken today...">Iron supplement (100mg/day), Prenatal vitamins. No pregnancy complications reported.</textarea>
-          </div>
-
-          <div class="survey-actions">
-            <button class="survey-submit-btn" id="survey-submit-btn">
-              Save &amp; Submit Assessment
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Health History Screen Overlay (Triggered from Hamburger Drawer) -->
-      <section class="health-screen-overlay" id="health-screen-overlay" aria-label="Health History & Medical Records">
-        <div class="health-header">
-          <button class="health-back-btn" id="health-back-btn" aria-label="Back to Side Panel">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-          <h2 class="health-header-title">Health History</h2>
-        </div>
-
-        <div class="health-body">
-          <span class="health-section-label">Maternity Clinic Consultation Notes</span>
-
-          <div class="report-card-item" data-id="neuvola-36-checkup">
-            <div class="report-card-main">
-              <span class="report-card-date">12.08.2026 at 10:15</span>
-              <span class="report-card-title">Maternity Clinic Consultation (36+2 wk)</span>
-              <span class="report-card-issuer">Niiralan neuvola • Laura Hakala</span>
-              <span class="report-card-tag clinic">Clinical Consultation</span>
-            </div>
-            <svg class="report-chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-
-          <div class="report-card-item" data-id="ultrasound-32-scan">
-            <div class="report-card-main">
-              <span class="report-card-date">15.07.2026 at 13:00</span>
-              <span class="report-card-title">Ultrasound Growth &amp; Biometry Scan (32 wk)</span>
-              <span class="report-card-issuer">KYS Naistenkeskus • Dr. Antti Rissanen</span>
-              <span class="report-card-tag clinic">Ultrasound Imaging</span>
-            </div>
-            <svg class="report-chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-
-          <span class="health-section-label">Diagnostic Laboratory Panels</span>
-
-          <div class="report-card-item" data-id="lab-blood-ferritin">
-            <div class="report-card-main">
-              <span class="report-card-date">04.08.2026 at 08:30</span>
-              <span class="report-card-title">Complete Blood Count &amp; Ferritin Panel</span>
-              <span class="report-card-issuer">ISLAB Hyvinvointiyhtymä / Kuopio</span>
-              <span class="report-card-tag lab">Laboratory Results</span>
-            </div>
-            <svg class="report-chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-
-          <div class="report-card-item" data-id="lab-ogtt-glucose">
-            <div class="report-card-main">
-              <span class="report-card-date">18.06.2026 at 09:00</span>
-              <span class="report-card-title">Oral Glucose Tolerance Test (2h OGTT)</span>
-              <span class="report-card-issuer">ISLAB Niirala Näytteenotto</span>
-              <span class="report-card-tag lab">Laboratory Results</span>
-            </div>
-            <svg class="report-chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
-        </div>
-      </section>
-
-      <!-- Clinical Medical Report Detail View (Kanta Style) -->
-      <section class="medical-report-overlay" id="medical-report-overlay" aria-label="Clinical Medical Report View">
-        <div class="health-header">
-          <button class="health-back-btn" id="report-detail-back-btn" aria-label="Back to Health History">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-          <h2 class="health-header-title" id="report-detail-title" style="font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Medical Report</h2>
-        </div>
-
-        <div class="clinical-report-doc" id="report-detail-content">
-          <!-- Dynamically populated authentic medical report text -->
-        </div>
-      </section>
-
-      <!-- Settings Screen Overlay (Triggered from Hamburger Drawer) -->
-      <section class="settings-screen-overlay" id="settings-screen-overlay" aria-label="Application Settings">
-        <div class="settings-header">
-          <button class="settings-back-btn" id="settings-back-btn" aria-label="Back to Side Panel">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-          <h2 class="settings-header-title">Settings</h2>
-        </div>
-
-        <div class="settings-body">
-          
-          <!-- Legal & Policies Group -->
-          <div>
-            <div class="settings-section-title">Legal &amp; Privacy</div>
-            <div class="settings-group-card">
-              <div class="settings-item-row clickable" id="settings-terms-row">
-                <div class="settings-item-info">
-                  <span class="settings-item-label">Terms and Conditions</span>
-                  <span class="settings-item-sub">Patient privacy &amp; 791 emergency response terms</span>
-                </div>
-                <svg class="settings-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <!-- Application Details Group (Static Read-Only Rows, No Button Behavior) -->
-          <div>
-            <div class="settings-section-title">System &amp; Hospital Pairing</div>
-            <div class="settings-group-card">
-              <div class="settings-item-row static">
-                <div class="settings-item-info">
-                  <span class="settings-item-label">Assigned Hospital Region</span>
-                  <span class="settings-item-sub">Pohjois-Savon hyvinvointialue</span>
-                </div>
-                <span class="settings-item-value">KYS / Kuopio</span>
-              </div>
-              <div class="settings-item-row static">
-                <div class="settings-item-info">
-                  <span class="settings-item-label">Application Version</span>
-                  <span class="settings-item-sub">Production Build</span>
-                </div>
-                <span class="settings-item-value">v1.0.4</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Danger Zone: Delete Account -->
-          <div class="danger-zone-card">
-            <h3 class="danger-zone-title">Delete Account</h3>
-            <p class="danger-zone-desc">
-              Permanently delete your account and data
-            </p>
-            <button class="delete-account-btn" id="delete-account-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                <line x1="10" y1="11" x2="10" y2="17"></line>
-                <line x1="14" y1="11" x2="14" y2="17"></line>
-              </svg>
-              <span>Delete Account</span>
-            </button>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Terms and Conditions Full Modal Overlay -->
-      <section class="terms-modal-overlay" id="terms-modal-overlay" aria-label="Terms of Service & Privacy Policy">
-        <div class="settings-header">
-          <button class="settings-back-btn" id="terms-back-btn" aria-label="Back to Settings">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-          <h2 class="settings-header-title">Terms &amp; Conditions</h2>
-        </div>
-
-        <div class="terms-document-content">
-          <h3>1. 791 Emergency Service Scope</h3>
-          <p>
-            The 791 Mother Emergency Application provides a dedicated clinical triage and rapid emergency communication service for expectant mothers in coordination with regional healthcare centers and delivery units.
-          </p>
-
-          <h3>2. Health Data Protection (GDPR &amp; Kanta)</h3>
-          <p>
-            All maternal and fetal health metadata transmitted via this application complies with the EU General Data Protection Regulation (GDPR) and national healthcare client data processing regulations. All data exchanges are end-to-end encrypted.
-          </p>
-
-          <h3>3. Emergency Dispatch &amp; Geolocation</h3>
-          <p>
-            When activating the 10-second SOS countdown, location coordinates are shared with emergency responders to assist in rapid medical dispatch and clinic navigation.
-          </p>
-
-          <h3>4. Medical Disclaimer</h3>
-          <p>
-            In critical, life-threatening scenarios where cellular or data connectivity is unavailable, the user must immediately call the national emergency number 112 directly.
-          </p>
-        </div>
-      </section>
-
-      <!-- Account Deletion Confirmation Modal Dialog -->
-      <div class="delete-confirm-overlay" id="delete-confirm-overlay">
-        <div class="delete-confirm-modal">
-          <h3 class="delete-modal-title">Delete Account?</h3>
-          <p class="delete-modal-text">
-            Are you sure you want to delete this account? All local emergency pairing and survey records will be permanently erased.
-          </p>
-          <div class="delete-modal-actions">
-            <button class="modal-cancel-btn" id="modal-cancel-btn">Cancel</button>
-            <button class="modal-confirm-delete-btn" id="modal-confirm-delete-btn">Delete</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Video Request Prompt Modal (Mother App) -->
-      <div class="video-request-modal-overlay" id="video-request-modal-mother">
-        <div class="video-request-card">
-          <h3 class="video-request-title">Switch to Video Call?</h3>
-          <p class="video-request-subtitle">Midwife Laura Hakala is requesting to switch this triage call to video.</p>
-          <div class="video-request-actions">
-            <button class="video-request-btn decline" id="mother-decline-video-btn">Decline</button>
-            <button class="video-request-btn accept" id="mother-accept-video-btn">Accept Video</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Emergency & Triage Call Screen -->
-      <section class="call-screen-overlay" id="call-screen" aria-label="Active Call Screen">
-        <div class="call-header">
-          <div class="call-timer-badge" id="call-timer-badge">00:00</div>
-        </div>
-        <div class="call-body">
-          <h2 class="call-contact-name" id="call-contact-name">Laura Hakala</h2>
-          <p class="call-facility-name" id="call-facility-name">Kuopion yliopistollinen sairaala</p>
-        </div>
-        <div class="call-controls-dock">
-          <button class="call-action-btn" id="call-map-btn" aria-label="View Emergency Route to Hospital">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
-              <line x1="8" y1="2" x2="8" y2="18"></line>
-              <line x1="16" y1="6" x2="16" y2="22"></line>
-            </svg>
-          </button>
-          
-          <button class="call-action-btn" id="call-video-btn" aria-label="Switch to Video Stream">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="23 7 16 12 23 17 23 7"></polygon>
-              <rect x="1" y="5" width="15" height="14" rx="3" ry="3"></rect>
-            </svg>
-          </button>
-          
-          <button class="call-action-btn" id="call-speaker-btn" aria-label="Toggle Speakerphone">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            </svg>
-          </button>
-          
-          <button class="call-action-btn end-call-btn" id="end-call-btn" aria-label="End Emergency Call">
-            <svg viewBox="0 0 32 32">
-              <path d="M16 9C10.5 9 5.8 11.2 2.4 14.8C1.8 15.4 1.8 16.4 2.4 17L4.6 19.2C5.1 19.7 6 19.8 6.6 19.3L9.6 17.5C10.2 17.1 10.6 16.4 10.6 15.6V12.7C12.3 12.2 14.1 12 16 12C17.9 12 19.7 12.2 21.4 12.7V15.6C21.4 16.4 21.8 17.1 22.4 17.5L25.4 19.3C26 19.8 26.9 19.7 27.4 19.2L29.6 17C30.2 16.4 30.2 15.4 29.6 14.8C26.2 11.2 21.5 9 16 9Z"/>
-            </svg>
-          </button>
-        </div>
-      </section>
-
-      <!-- Video Call Triage Screen (iPhone 17 - 6.png) -->
-      <section class="video-screen-overlay" id="video-screen-overlay" aria-label="Active Video Stream">
-        <div class="video-top-header">
-          <div class="video-header-spacer"></div>
-
-          <div class="call-timer-badge" id="video-timer-badge">00:00</div>
-
-          <button class="video-flip-camera-btn" id="video-flip-camera-btn" aria-label="Flip Camera Feed">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M23 7l-7 5 7 5V7z"></path>
-              <rect x="1" y="5" width="15" height="14" rx="3" ry="3"></rect>
-              <path d="M6 10l2-2 2 2"></path>
-              <path d="M10 14l-2 2-2-2"></path>
-            </svg>
-          </button>
-        </div>
-
-        <div class="video-feed-container">
-          <div class="video-stream-bg">
-            <div class="video-midwife-avatar" aria-label="Midwife Laura Hakala">
-              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="50" fill="#0D9488"/>
-                <!-- Head & Hair -->
-                <circle cx="50" cy="36" r="16" fill="#FBBF24"/>
-                <circle cx="50" cy="38" r="13" fill="#FED7AA"/>
-                <path d="M37 32 C37 23 63 23 63 32 C58 27 42 27 37 32 Z" fill="#D97706"/>
-                <!-- Medical Uniform -->
-                <path d="M20 86 C20 64 35 56 50 56 C65 56 80 64 80 86 Z" fill="#14B8A6"/>
-                <path d="M42 56 L50 68 L58 56 Z" fill="#FED7AA"/>
-                <!-- Stethoscope -->
-                <path d="M36 60 C36 74 44 78 50 78 C56 78 64 74 64 60" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round" fill="none"/>
-                <circle cx="50" cy="78" r="3.5" fill="#F8FAFC"/>
-              </svg>
-            </div>
-            <h2 class="video-midwife-name">Laura Hakala</h2>
-            <div class="video-midwife-role">Midwife</div>
-            <div class="video-midwife-facility">Kuopion yliopistollinen sairaala</div>
-          </div>
-        </div>
-
-        <div class="video-pip-window">
-          <div class="video-pip-avatar" aria-label="Sofia Korhonen">
-            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="50" fill="#C2410C"/>
-              <!-- Head & Hair -->
-              <circle cx="50" cy="36" r="16" fill="#78350F"/>
-              <circle cx="50" cy="39" r="13" fill="#FED7AA"/>
-              <path d="M34 35 C34 22 66 22 66 35 C66 46 64 52 62 56 C60 50 64 38 60 35 C55 30 45 30 40 35 C36 38 40 50 38 56 C36 52 34 46 34 35 Z" fill="#78350F"/>
-              <!-- Maternity Sweater -->
-              <path d="M20 86 C20 64 35 56 50 56 C65 56 80 64 80 86 Z" fill="#FB923C"/>
-              <path d="M42 58 Q 50 66 58 58" stroke="#FDE047" stroke-width="2" fill="none"/>
-              <circle cx="50" cy="64" r="2.5" fill="#FDE047"/>
-            </svg>
-          </div>
-          <span class="video-pip-name">Sofia Korhonen</span>
-          <span class="video-pip-role">You (38+4 wk)</span>
-        </div>
-
-        <div class="video-controls-dock">
-          <button class="call-action-btn" id="video-map-btn" aria-label="View Route Map">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
-              <line x1="8" y1="2" x2="8" y2="18"></line>
-              <line x1="16" y1="6" x2="16" y2="22"></line>
-            </svg>
-          </button>
-
-          <button class="call-action-btn active-toggle" id="video-toggle-btn" aria-label="Switch Back to Audio Call">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="23 7 16 12 23 17 23 7"></polygon>
-              <rect x="1" y="5" width="15" height="14" rx="3" ry="3"></rect>
-            </svg>
-          </button>
-
-          <button class="call-action-btn" id="video-speaker-btn" aria-label="Toggle Speakerphone">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-            </svg>
-          </button>
-
-          <button class="call-action-btn end-call-btn" id="video-end-call-btn" aria-label="End Emergency Call">
-            <svg viewBox="0 0 32 32">
-              <path d="M16 9C10.5 9 5.8 11.2 2.4 14.8C1.8 15.4 1.8 16.4 2.4 17L4.6 19.2C5.1 19.7 6 19.8 6.6 19.3L9.6 17.5C10.2 17.1 10.6 16.4 10.6 15.6V12.7C12.3 12.2 14.1 12 16 12C17.9 12 19.7 12.2 21.4 12.7V15.6C21.4 16.4 21.8 17.1 22.4 17.5L25.4 19.3C26 19.8 26.9 19.7 27.4 19.2L29.6 17C30.2 16.4 30.2 15.4 29.6 14.8C26.2 11.2 21.5 9 16 9Z"/>
-            </svg>
-          </button>
-        </div>
-      </section>
-
-      <!-- 1. Emergency Turn-by-Turn Map View Overlay (Linked to Call Screen) -->
-      <section class="map-view-overlay" id="map-view-overlay" aria-label="Emergency Navigation Map">
-        <div class="map-top-banner">
-          <svg class="map-turn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="19" x2="12" y2="5"></line>
-            <polyline points="5 12 12 5 19 12"></polyline>
-          </svg>
-          <span class="map-destination-text" id="map-destination-text">Juontotie 8, 70150 Kuopio</span>
-        </div>
-
-        <div class="map-canvas-container">
-          <div id="leaflet-map"></div>
-        </div>
-
-        <div class="map-bottom-dock">
-          <button class="map-close-btn" id="map-close-btn" aria-label="Exit Navigation">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-          <div class="map-eta-info">
-            <span class="map-eta-time">3 min</span>
-            <span class="map-eta-distance">650 m - 22:02</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. Healthcare Explorer & Saved Locations Map (Linked to Clinic Main Screen) -->
-      <section class="map-view-overlay" id="explorer-map-overlay" aria-label="Healthcare Locations Explorer">
-        <div class="explorer-search-header">
-          <button class="explorer-back-btn" id="explorer-back-btn" aria-label="Back to Clinic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-          </button>
-          <div class="explorer-search-box">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" class="explorer-search-input" id="explorer-search-input" placeholder="Search clinics, hospitals in Kuopio...">
-          </div>
-        </div>
-
-        <div class="map-canvas-container">
-          <div id="explorer-leaflet-map"></div>
-        </div>
-
-        <div class="saved-locations-sheet" id="saved-locations-sheet">
-          <div class="saved-sheet-drag-zone" id="saved-sheet-drag-zone">
-            <div class="saved-sheet-handle"></div>
-            <h3 class="saved-sheet-title">Saved Healthcare Locations</h3>
-          </div>
-          <div class="saved-locations-list" id="saved-locations-list">
-            <div class="saved-location-card" data-id="niiralan-neuvola">
-              <div class="saved-location-info">
-                <span class="saved-location-name">Niiralan neuvola</span>
-                <span class="saved-location-address">Juontotie 8, 70150 Kuopio</span>
-                <span class="saved-location-tag">Primary Maternity Clinic</span>
-              </div>
-              <div class="saved-location-action-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </div>
-            </div>
-            <div class="saved-location-card" data-id="kys-hospital">
-              <div class="saved-location-info">
-                <span class="saved-location-name">Kuopion yliopistollinen sairaala (KYS)</span>
-                <span class="saved-location-address">Puijonlaaksontie 2, 70210 Kuopio</span>
-                <span class="saved-location-tag">Hospital & Birth Delivery Unit</span>
-              </div>
-              <div class="saved-location-action-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </div>
-            </div>
-            <div class="saved-location-card" data-id="puijonlaakso-neuvola">
-              <div class="saved-location-info">
-                <span class="saved-location-name">Puijonlaakson lääkäriasema</span>
-                <span class="saved-location-address">Sammakkolammentie 12, 70200 Kuopio</span>
-                <span class="saved-location-tag">Community Health Station</span>
-              </div>
-              <div class="saved-location-action-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </div>
+    <footer>
+      Tip: keep all three tabs open in <strong>this same browser</strong> — the demo syncs across tabs on this device only.
+    </footer>
   </div>
-
-  <!-- Main JavaScript App Entry Point -->
-  <script type="module" src="js/app.js"></script>
 </body>
 </html>

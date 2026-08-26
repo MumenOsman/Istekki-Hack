@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>791 Emergency Dispatch (ED / 112)</title>
+
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/ed/ed-dispatch.css">
+</head>
+<body>
+
+  <!-- CAD Workstation Container (Clean Hospital Surface) -->
+  <div class="ed-console-container">
+    
+    <!-- Top Header -->
+    <header class="ed-header">
+      <div class="ed-branding">
+        <span class="ed-logo-badge">791 ED</span>
+        <h1 class="ed-title">Maternal Emergency Dispatch Coordination &bull; KYS</h1>
+      </div>
+      
+      <div class="ed-system-status">
+        <div class="ed-status-indicator">
+          <div class="ed-live-dot"></div>
+          <span>System Online</span>
+        </div>
+        <span>Station 04</span>
+      </div>
+    </header>
+
+    <!-- Main Grid -->
+    <main class="ed-main-grid">
+      
+      <!-- Left Column: Patient EHR & Location -->
+      <section style="display: flex; flex-direction: column; gap: 14px;">
+        
+        <!-- Incident Status Banner -->
+        <div class="ed-alert-banner standby" id="ed-alert-banner">
+          <div class="alert-left">
+            <span class="alert-code code-blue" id="alert-code">Standby &bull; Monitoring</span>
+            <h2 class="alert-headline" id="alert-headline">Active Call — Juontotie 8, Kuopio</h2>
+          </div>
+          <div class="alert-time" id="alert-time-badge">00:00</div>
+        </div>
+
+        <!-- Patient Telemetry & EHR -->
+        <div class="ed-card">
+          <div class="ed-card-title">
+            <span>Patient Information</span>
+            <span class="highlight-teal">Kanta Health Record</span>
+          </div>
+
+          <table class="ed-table">
+            <tbody>
+              <tr>
+                <td>Patient Name & DOB</td>
+                <td>Maria Nieminen (29.08.1994, 29 y)</td>
+              </tr>
+              <tr>
+                <td>Gestational Age & Parity</td>
+                <td class="highlight-teal">H38+1 &bull; G2P1</td>
+              </tr>
+              <tr>
+                <td>Blood Group</td>
+                <td>A+ Rh(D) Pos</td>
+              </tr>
+              <tr>
+                <td>Contractions</td>
+                <td class="highlight-red">Every 3-4 min (~55s)</td>
+              </tr>
+              <tr>
+                <td>VAS Pain Score</td>
+                <td>7 / 10</td>
+              </tr>
+              <tr>
+                <td>Amniotic Fluid</td>
+                <td class="highlight-green">Intact (No rupture)</td>
+              </tr>
+              <tr>
+                <td>Active Diagnoses</td>
+                <td>O60.0 (Threatened labor), O24.4 (GDM)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Location & Hospital Destination -->
+        <div class="ed-card">
+          <div class="ed-card-title">
+            <span>Location & Hospital Route</span>
+            <span class="highlight-green">ETA ~8 min</span>
+          </div>
+
+          <table class="ed-table">
+            <tbody>
+              <tr>
+                <td>Address</td>
+                <td>Juontotie 8, 70150 Kuopio</td>
+              </tr>
+              <tr>
+                <td>Destination Clinic</td>
+                <td>Kuopion yliopistollinen sairaala (KYS Synnytyssali)</td>
+              </tr>
+              <tr>
+                <td>Transit Distance</td>
+                <td>6.2 km</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </section>
+
+      <!-- Right Column: Midwife Backchannel, Outcome & Dispatch -->
+      <section style="display: flex; flex-direction: column; gap: 14px;">
+        
+        <!-- Connected Midwife & Private Backchannel -->
+        <div class="midwife-box">
+          <div class="midwife-status-row">
+            <div>
+              <div class="midwife-info-name">Laura Hakala</div>
+              <div class="midwife-info-sub" id="midwife-status-sub">On triage call with Mother</div>
+            </div>
+            
+            <button class="backchannel-mic-btn" id="ed-backchannel-mic-btn" aria-label="Toggle Audio Bridge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+              <span>Muted Line</span>
+            </button>
+          </div>
+
+          <!-- Live Midwife Triage Recommendation -->
+          <div class="recommendation-status-box" id="recommendation-box">
+            <div class="recommendation-icon blue" id="recommendation-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+            </div>
+            <div>
+              <div class="recommendation-text-main" id="recommendation-main">Evaluating Triage Status</div>
+              <div class="recommendation-text-sub" id="recommendation-sub">Awaiting midwife action on triage dock...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ambulance Dispatch Control -->
+        <div class="ed-card">
+          <div class="ed-card-title">
+            <span>Ambulance Unit Dispatch</span>
+            <span id="assigned-unit-code" class="highlight-teal">Unit: ENS-121 (KYS)</span>
+          </div>
+
+          <div class="dispatch-action-box">
+            <button class="btn-dispatch-ambulance" id="btn-dispatch-unit">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                <path d="M14 8h4l3 3v6a1 1 0 0 1-1 1h-2"/>
+                <circle cx="7" cy="18" r="2"/>
+                <circle cx="17" cy="18" r="2"/>
+                <line x1="8" y1="9" x2="8" y2="13"/>
+                <line x1="6" y1="11" x2="10" y2="11"/>
+              </svg>
+              Confirm & Dispatch Ambulance
+            </button>
+
+            <!-- 4-Stage Tracker -->
+            <div class="unit-tracker">
+              <div class="tracker-step active" id="step-alert">
+                <div class="tracker-dot"></div>
+                <span>Alerted</span>
+              </div>
+              <div class="tracker-step" id="step-dispatched">
+                <div class="tracker-dot"></div>
+                <span>Dispatched</span>
+              </div>
+              <div class="tracker-step" id="step-enroute">
+                <div class="tracker-dot"></div>
+                <span>En Route</span>
+              </div>
+              <div class="tracker-step" id="step-onscene">
+                <div class="tracker-dot"></div>
+                <span>On Scene</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Log -->
+        <div class="ed-card" style="flex: 1;">
+          <div class="ed-card-title">
+            <span>Activity Log</span>
+            <span>791 Bus</span>
+          </div>
+
+          <div class="ed-log-list" id="ed-event-logs">
+            <div class="log-item">
+              <span class="time">[09:41:00]</span>
+              <span class="msg">Dispatch console online and connected</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <script type="module" src="js/ed/ed-app.js"></script>
+</body>
+</html>

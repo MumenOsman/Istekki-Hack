@@ -1,0 +1,453 @@
+/* =========================================================
+   791 Emergency Dispatcher (ED / 112 CAD Console)
+   Clean, Settled Finnish Clinical Design Language
+   Consistent with Mother & Midwife App Design System
+   ========================================================= */
+
+:root {
+  --color-primary-teal: #00897B;
+  --color-teal-light: #E0F2F1;
+  --color-teal-dark: #004D40;
+  --color-sos-red: #E52E2E;
+  --color-red-light: #FEE2E2;
+  --color-red-dark: #DC2626;
+  --color-amber: #D97706;
+  --color-amber-light: #FEF3C7;
+  --color-bg-page: #F1F5F9;
+  --color-surface-white: #FFFFFF;
+  --color-border-subtle: #CBD5E1;
+  --color-border-light: #E2E8F0;
+  --color-text-main: #0F172A;
+  --color-text-muted: #64748B;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg-page);
+  color: var(--color-text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* CAD Workstation Container (Clean Hospital Surface) */
+.ed-console-container {
+  width: 100%;
+  max-width: 960px;
+  background-color: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top System Header */
+.ed-header {
+  background-color: #FFFFFF;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.ed-branding {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ed-logo-badge {
+  background: var(--color-primary-teal);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.ed-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin: 0;
+}
+
+.ed-system-status {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.ed-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ed-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10B981;
+}
+
+/* Main Content Grid */
+.ed-main-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 20px;
+  padding: 20px 24px;
+  background-color: #F8FAFC;
+}
+
+@media (max-width: 800px) {
+  .ed-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Incident Alert Banner (Settled, Medical Clean) */
+.ed-alert-banner {
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.ed-alert-banner.standby {
+  background: #FFFFFF;
+  border-color: var(--color-border-subtle);
+}
+
+.ed-alert-banner.emergency {
+  background: var(--color-red-light);
+  border-color: var(--color-red-dark);
+}
+
+.ed-alert-banner.observing {
+  background: var(--color-amber-light);
+  border-color: var(--color-amber);
+}
+
+.alert-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.alert-code {
+  font-size: 11.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-primary-teal);
+}
+
+.alert-code.code-red { color: var(--color-red-dark); }
+.alert-code.code-amber { color: var(--color-amber); }
+.alert-code.code-blue { color: var(--color-primary-teal); }
+
+.alert-headline {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-text-main);
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.alert-time {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Plain EHR Card Containers */
+.ed-card {
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ed-card-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: 6px;
+  margin: 0;
+}
+
+/* Plain Standard EHR Tables */
+.ed-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ed-table td {
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.ed-table td:first-child {
+  color: var(--color-text-muted);
+  font-weight: 500;
+  width: 44%;
+}
+
+.ed-table td:last-child {
+  color: var(--color-text-main);
+  font-weight: 700;
+  text-align: right;
+}
+
+.ed-table tr:last-child td {
+  border-bottom: none;
+}
+
+.highlight-red { color: var(--color-red-dark) !important; }
+.highlight-green { color: #10B981 !important; }
+.highlight-teal { color: var(--color-primary-teal) !important; }
+
+/* Connected Midwife Tile */
+.midwife-box {
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.midwife-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.midwife-info-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-primary-teal);
+}
+
+.midwife-info-sub {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* Backchannel Audio Button */
+.backchannel-mic-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-main);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.1s ease;
+}
+
+.backchannel-mic-btn:hover {
+  background: #F1F5F9;
+}
+
+.backchannel-mic-btn.active-talk {
+  background: var(--color-teal-light);
+  border-color: var(--color-primary-teal);
+  color: var(--color-teal-dark);
+}
+
+.backchannel-mic-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Midwife Triage Recommendation Box */
+.recommendation-status-box {
+  background: #F8FAFC;
+  border: 1px solid var(--color-border-light);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.recommendation-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background: #E2E8F0;
+  color: var(--color-text-main);
+}
+
+.recommendation-icon.red {
+  background: var(--color-red-light);
+  color: var(--color-red-dark);
+}
+
+.recommendation-icon.amber {
+  background: var(--color-amber-light);
+  color: var(--color-amber);
+}
+
+.recommendation-icon.blue {
+  background: var(--color-teal-light);
+  color: var(--color-primary-teal);
+}
+
+.recommendation-text-main {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--color-text-main);
+}
+
+.recommendation-text-sub {
+  font-size: 11.5px;
+  color: var(--color-text-muted);
+}
+
+/* Ambulance Dispatch Action Control */
+.dispatch-action-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-dispatch-ambulance {
+  width: 100%;
+  height: 48px;
+  background: var(--color-sos-red);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.1s ease;
+}
+
+.btn-dispatch-ambulance:hover {
+  opacity: 0.94;
+}
+
+.btn-dispatch-ambulance:active {
+  transform: scale(0.99);
+}
+
+.btn-dispatch-ambulance.dispatched {
+  background: #10B981;
+}
+
+/* 4-Stage Progress Tracker */
+.unit-tracker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 4px 10px 0 10px;
+}
+
+.tracker-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.tracker-step.active {
+  color: #10B981;
+}
+
+.tracker-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #CBD5E1;
+}
+
+.tracker-step.active .tracker-dot {
+  background: #10B981;
+}
+
+/* Event Log */
+.ed-log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 110px;
+  overflow-y: auto;
+  font-size: 12px;
+  font-family: monospace;
+}
+
+.log-item {
+  color: var(--color-text-muted);
+  display: flex;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.log-item .time {
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.log-item .msg {
+  color: var(--color-text-main);
+}

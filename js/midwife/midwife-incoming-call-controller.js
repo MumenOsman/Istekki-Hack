@@ -100,8 +100,9 @@ export function initMidwifeIncomingCallController() {
   // 1. Microphone: Selected while pressed / toggled for muted conversation
   if (triageMicBtn) {
     triageMicBtn.addEventListener('click', () => {
-      triageMicBtn.classList.toggle('selected');
-      console.log('[791 Midwife] Microphone mute state:', triageMicBtn.classList.contains('selected') ? 'MUTED' : 'UNMUTED');
+      const isMuted = triageMicBtn.classList.toggle('selected');
+      broadcastBusMessage({ type: 'MIDWIFE_MIC_TOGGLE', isMuted });
+      console.log('[791 Midwife] Microphone mute state:', isMuted ? 'MUTED' : 'UNMUTED');
     });
   }
 
@@ -111,10 +112,12 @@ export function initMidwifeIncomingCallController() {
       const wasSelected = triageAmbulanceBtn.classList.contains('selected');
       if (wasSelected) {
         triageAmbulanceBtn.classList.remove('selected');
+        broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'idle' });
       } else {
         triageAmbulanceBtn.classList.add('selected');
         if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
         if (triageHangupBtn) triageHangupBtn.classList.remove('selected', 'is-call-state');
+        broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'ambulance', midwife: 'Laura Hakala' });
       }
       console.log('[791 Midwife] Triage Outcome selected: AMBULANCE');
     });
@@ -126,10 +129,12 @@ export function initMidwifeIncomingCallController() {
       const wasSelected = triageTimerBtn.classList.contains('selected');
       if (wasSelected) {
         triageTimerBtn.classList.remove('selected');
+        broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'idle' });
       } else {
         triageTimerBtn.classList.add('selected');
         if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
         if (triageHangupBtn) triageHangupBtn.classList.remove('selected', 'is-call-state');
+        broadcastBusMessage({ type: 'TRIAGE_RECOMMENDATION', action: 'wait', midwife: 'Laura Hakala' });
       }
       console.log('[791 Midwife] Triage Outcome selected: SAND TIMER / WAIT');
     });
@@ -142,12 +147,14 @@ export function initMidwifeIncomingCallController() {
       if (isCall) {
         // Switch back to Red Hang Up state
         triageHangupBtn.classList.remove('is-call-state', 'selected');
+        broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: false });
         console.log('[791 Midwife] Upper Dock button switched to: HANG UP (Red)');
       } else {
         // Switch to Green Call state
         triageHangupBtn.classList.add('is-call-state', 'selected');
         if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
         if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
+        broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: true });
         console.log('[791 Midwife] Upper Dock button switched to: CALL (Green)');
       }
     });

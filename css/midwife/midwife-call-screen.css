@@ -397,15 +397,15 @@
 .triage-dock-btn.selected {
   background: #E0F2F1 !important;
   color: #004D40 !important;
-  border-color: var(--color-primary-teal) !important;
-  box-shadow: 0 0 0 1.5px var(--color-primary-teal);
+  border: 2px solid var(--color-primary-teal) !important;
+  box-shadow: none !important;
 }
 
 .triage-dock-btn.selected svg {
   stroke: #004D40 !important;
 }
 
-/* Hang Up Button on New Dock (Identical to previous dock: Solid Red with white handset) */
+/* Hang Up / Call Toggle Button on New Dock */
 .triage-dock-btn.hangup-item {
   width: 60px;
   height: 60px;
@@ -414,13 +414,26 @@
   border-radius: 50%;
   background-color: var(--color-sos-red) !important;
   color: #FFFFFF !important;
-  border: 1.5px solid #DC2626;
+  border: none;
   outline: none;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 0.1s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: none;
+  transition: transform 0.1s ease, filter 0.15s ease, background-color 0.2s ease;
+}
+
+.triage-dock-btn.hangup-item .icon-hangup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.triage-dock-btn.hangup-item .icon-call {
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
 .triage-dock-btn.hangup-item:hover {
@@ -439,14 +452,22 @@
   stroke: none !important;
 }
 
+/* Call State (when pressed / toggled on): Turns Solid Green with Call Handset icon */
+.triage-dock-btn.hangup-item.is-call-state,
 .triage-dock-btn.hangup-item.selected {
-  background-color: #DC2626 !important;
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.4);
-  border-color: #B91C1C !important;
+  background-color: #10B981 !important; /* Green */
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.triage-dock-btn.hangup-item.selected svg {
-  fill: #FFFFFF !important;
+.triage-dock-btn.hangup-item.is-call-state .icon-hangup,
+.triage-dock-btn.hangup-item.selected .icon-hangup {
+  display: none;
+}
+
+.triage-dock-btn.hangup-item.is-call-state .icon-call,
+.triage-dock-btn.hangup-item.selected .icon-call {
+  display: flex;
 }
 
 /* Primary Lower Dock */

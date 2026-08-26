@@ -114,7 +114,7 @@ export function initMidwifeIncomingCallController() {
       } else {
         triageAmbulanceBtn.classList.add('selected');
         if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
-        if (triageHangupBtn) triageHangupBtn.classList.remove('selected');
+        if (triageHangupBtn) triageHangupBtn.classList.remove('selected', 'is-call-state');
       }
       console.log('[791 Midwife] Triage Outcome selected: AMBULANCE');
     });
@@ -129,24 +129,27 @@ export function initMidwifeIncomingCallController() {
       } else {
         triageTimerBtn.classList.add('selected');
         if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
-        if (triageHangupBtn) triageHangupBtn.classList.remove('selected');
+        if (triageHangupBtn) triageHangupBtn.classList.remove('selected', 'is-call-state');
       }
       console.log('[791 Midwife] Triage Outcome selected: SAND TIMER / WAIT');
     });
   }
 
-  // 4. Hang Up (Upper Dock): Selected when pressed, deselects Ambulance and Sand Timer
+  // 4. Hang Up / Call Toggle (Upper Dock): Turns into Green Call button when pressed, and vice versa
   if (triageHangupBtn) {
     triageHangupBtn.addEventListener('click', () => {
-      const wasSelected = triageHangupBtn.classList.contains('selected');
-      if (wasSelected) {
-        triageHangupBtn.classList.remove('selected');
+      const isCall = triageHangupBtn.classList.contains('is-call-state');
+      if (isCall) {
+        // Switch back to Red Hang Up state
+        triageHangupBtn.classList.remove('is-call-state', 'selected');
+        console.log('[791 Midwife] Upper Dock button switched to: HANG UP (Red)');
       } else {
-        triageHangupBtn.classList.add('selected');
+        // Switch to Green Call state
+        triageHangupBtn.classList.add('is-call-state', 'selected');
         if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
         if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
+        console.log('[791 Midwife] Upper Dock button switched to: CALL (Green)');
       }
-      console.log('[791 Midwife] Triage Outcome selected: HANG UP');
     });
   }
 

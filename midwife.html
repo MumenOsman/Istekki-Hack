@@ -324,11 +324,18 @@
           <!-- Upper Triage Outcome Dock (From Left to Right: Hang Up, Sand Timer, Ambulance, Microphone) -->
           <div class="connected-triage-dock" aria-label="Triage Assessment Controls">
             
-            <!-- 1. Hang Up Button (Leftmost) -->
-            <button class="triage-dock-btn hangup-item" id="triage-dock-hangup-btn" aria-label="Hang Up Outcome">
-              <svg viewBox="0 0 32 32">
-                <path d="M16 9C10.5 9 5.8 11.2 2.4 14.8C1.8 15.4 1.8 16.4 2.4 17L4.6 19.2C5.1 19.7 6 19.8 6.6 19.3L9.6 17.5C10.2 17.1 10.6 16.4 10.6 15.6V12.7C12.3 12.2 14.1 12 16 12C17.9 12 19.7 12.2 21.4 12.7V15.6C21.4 16.4 21.8 17.1 22.4 17.5L25.4 19.3C26 19.8 26.9 19.7 27.4 19.2L29.6 17C30.2 16.4 30.2 15.4 29.6 14.8C26.2 11.2 21.5 9 16 9Z"/>
-              </svg>
+            <!-- 1. Hang Up / Call Toggle Button (Leftmost) -->
+            <button class="triage-dock-btn hangup-item" id="triage-dock-hangup-btn" aria-label="Toggle Call / Hang Up Outcome">
+              <span class="icon-hangup">
+                <svg viewBox="0 0 32 32">
+                  <path d="M16 9C10.5 9 5.8 11.2 2.4 14.8C1.8 15.4 1.8 16.4 2.4 17L4.6 19.2C5.1 19.7 6 19.8 6.6 19.3L9.6 17.5C10.2 17.1 10.6 16.4 10.6 15.6V12.7C12.3 12.2 14.1 12 16 12C17.9 12 19.7 12.2 21.4 12.7V15.6C21.4 16.4 21.8 17.1 22.4 17.5L25.4 19.3C26 19.8 26.9 19.7 27.4 19.2L29.6 17C30.2 16.4 30.2 15.4 29.6 14.8C26.2 11.2 21.5 9 16 9Z"/>
+                </svg>
+              </span>
+              <span class="icon-call">
+                <svg viewBox="0 0 24 24">
+                  <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-2.2 2.2a15.053 15.053 0 0 1-6.59-6.59l2.2-2.21a.96.96 0 0 0 .25-1A11.36 11.36 0 0 1 8.5 3.92c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.54c0-.55-.45-1-.99-1z"/>
+                </svg>
+              </span>
             </button>
 
             <!-- 2. Sand Timer Button -->

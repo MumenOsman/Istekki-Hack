@@ -38,6 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
       openHealthScreen();
     } else if (target === 'settings') {
       openSettingsScreen();
+    } else if (target === 'signout') {
+      console.log('[791 Mother] User signed out.');
+      location.reload();
     }
   });
 

@@ -30,6 +30,7 @@
   <link rel="stylesheet" href="css/components/health-history.css">
   <link rel="stylesheet" href="css/components/settings-screen.css">
   <link rel="stylesheet" href="css/components/pagination.css">
+  <link rel="stylesheet" href="css/components/mother-login.css">
 </head>
 <body>
 
@@ -71,6 +72,35 @@
     <!-- Main Screen Viewport -->
     <div class="app-screen">
       
+      <!-- 0. Mother Sign-In View -->
+      <section class="mother-login-container" id="mother-login-view">
+        
+        <!-- Header -->
+        <div class="mother-login-header">
+          <h1 class="mother-app-title">791</h1>
+        </div>
+
+        <!-- Form with ID and Password -->
+        <form class="mother-login-form" id="mother-login-form">
+          
+          <div class="mother-form-group">
+            <label class="mother-form-label" for="mother-patient-id">ID</label>
+            <input type="text" class="mother-form-input" id="mother-patient-id" placeholder="Enter ID" value="290894-912X" required>
+          </div>
+
+          <div class="mother-form-group">
+            <label class="mother-form-label" for="mother-pin">Password</label>
+            <input type="password" class="mother-form-input" id="mother-pin" placeholder="Enter password" value="password123" required>
+          </div>
+
+          <button type="submit" class="mother-submit-btn" id="mother-submit-btn">
+            Sign in
+          </button>
+
+        </form>
+
+      </section>
+
       <!-- Top Application Header -->
       <header class="app-header">
         <button class="menu-btn" id="menu-toggle-btn" aria-label="Open Navigation Menu">

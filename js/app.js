@@ -11,6 +11,7 @@ import { initProfileController, openProfileScreen } from './modules/profile-cont
 import { initSurveyController } from './modules/survey-controller.js';
 import { initHealthController, openHealthScreen } from './modules/health-controller.js';
 import { initSettingsController, openSettingsScreen } from './modules/settings-controller.js';
+import { initLoginController, motherSignOut } from './modules/login-controller.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Update live clock in status bar
@@ -18,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateStatusBarClock, 1000);
 
   // Initialize modules
+  initLoginController();
   initSOSController();
   initNurseController();
   initNavigation();
@@ -40,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
       openSettingsScreen();
     } else if (target === 'signout') {
       console.log('[791 Mother] User signed out.');
-      location.reload();
+      motherSignOut();
     }
   });
 

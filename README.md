@@ -8,7 +8,7 @@ An integrated three-application real-time triage system designed for out-of-hosp
 
 The solution consists of three specialized web applications running simultaneously:
 
-1. **Mother Application (`index.html`)**
+1. **Mother Application (`mother.html`)**
    - Direct 1-tap SOS emergency trigger with cancel grace period.
    - Real-time video and audio connection with on-duty midwife.
    - Automatic Kanta patient data and GPS location transmission.
@@ -48,9 +48,10 @@ python -m http.server 3000
 ```
 
 ### Accessing the Applications
-Open three separate browser windows or tabs side by side:
+Open the landing page and use its buttons to launch each app in its own tab (all three must stay open in the same browser for the real-time sync to work):
 
-- **Mother App:** [http://localhost:3000/index.html](http://localhost:3000/index.html) (or `http://localhost:3000`)
+- **Landing Page:** [http://localhost:3000](http://localhost:3000) (or `http://localhost:3000/index.html`)
+- **Mother App:** [http://localhost:3000/mother.html](http://localhost:3000/mother.html)
 - **Midwife App:** [http://localhost:3000/midwife.html](http://localhost:3000/midwife.html)
 - **ED Console:** [http://localhost:3000/ed.html](http://localhost:3000/ed.html)
 
@@ -65,7 +66,7 @@ To test the complete end-to-end emergency flow:
    - Tap the large green circular button to enter **"Listening"** mode (button turns red "Stop Listening").
 
 2. **Trigger Mother SOS:**
-   - On `index.html`, tap the large red **SOS** button.
+   - On `mother.html`, tap the large red **SOS** button.
    - The Midwife app (`midwife.html`) immediately receives the incoming call screen with a live upward elapsed timer, displaying patient demographics (`Maria Nieminen`, `29`, `H38+1`, `G2P1`).
    - The ED Console (`ed.html`) simultaneously activates the incident mission card.
 
@@ -102,7 +103,8 @@ To test the complete end-to-end emergency flow:
 - **Design System:** Custom CSS design tokens (`css/design-tokens.css`) using Google Font `Inter` across all applications.
 - **File Structure:**
   ```
-  ├── index.html                     # Mother Application Entry Point
+  ├── index.html                     # Landing page — links to all three apps
+  ├── mother.html                    # Mother Application Entry Point
   ├── midwife.html                   # Midwife Application Entry Point
   ├── ed.html                        # Emergency Dispatcher CAD Console
   ├── README.md                      # System Documentation & Testing Guide

@@ -140,22 +140,24 @@ export function initMidwifeIncomingCallController() {
     });
   }
 
-  // 4. Hang Up / Call Toggle (Upper Dock): Turns into Green Call button when pressed, and vice versa
+  // 4. Hang Up / Call Toggle (Upper Dock):
+  // When Red (Hang Up) is clicked -> Disconnects/closes line with ED & turns Green (Call)
+  // When Green (Call) is clicked -> Connects/opens line with ED & turns Red (Hang Up)
   if (triageHangupBtn) {
     triageHangupBtn.addEventListener('click', () => {
-      const isCall = triageHangupBtn.classList.contains('is-call-state');
-      if (isCall) {
-        // Switch back to Red Hang Up state
+      const isCurrentlyGreenCall = triageHangupBtn.classList.contains('is-call-state');
+      if (isCurrentlyGreenCall) {
+        // User clicked Green Call button -> Connects to ED and transforms back to Red Hang Up
         triageHangupBtn.classList.remove('is-call-state', 'selected');
-        broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: false });
-        console.log('[791 Midwife] Upper Dock button switched to: HANG UP (Red)');
+        broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: true });
+        console.log('[791 Midwife] Clicked Call (Green) -> Opened direct line with ED Dispatcher');
       } else {
-        // Switch to Green Call state
+        // User clicked Red Hang Up button -> Disconnects from ED and transforms into Green Call button
         triageHangupBtn.classList.add('is-call-state', 'selected');
         if (triageAmbulanceBtn) triageAmbulanceBtn.classList.remove('selected');
         if (triageTimerBtn) triageTimerBtn.classList.remove('selected');
-        broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: true });
-        console.log('[791 Midwife] Upper Dock button switched to: CALL (Green)');
+        broadcastBusMessage({ type: 'ED_CALL_TOGGLE', isCallState: false });
+        console.log('[791 Midwife] Clicked Hang Up (Red) -> Closed direct line with ED Dispatcher');
       }
     });
   }

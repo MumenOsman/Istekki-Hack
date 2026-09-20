@@ -1,0 +1,13 @@
+{
+  "name": "791-maternal-emergency-system",
+  "version": "1.0.0",
+  "description": "Integrated three-application real-time triage system for out-of-hospital maternal emergencies in Finland",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

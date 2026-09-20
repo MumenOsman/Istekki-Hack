@@ -29,9 +29,9 @@ const MIME_TYPES = {
 };
 
 const ROUTE_ALIASES = {
-  '/': '/landing.html',
-  '/landing': '/landing.html',
-  '/hub': '/landing.html',
+  '/': '/index.html',
+  '/landing': '/index.html',
+  '/hub': '/index.html',
   '/mother': '/mother.html',
   '/midwife': '/midwife.html',
   '/ed': '/ed.html'

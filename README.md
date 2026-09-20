@@ -2,29 +2,33 @@
 
 An integrated three-application real-time triage system designed for out-of-hospital emergency childbirth in Finland. The system connects pregnant mothers, on-duty hospital midwives, and Emergency Dispatchers (ED / 112) through a unified real-time communications bus.
 
-> [!NOTE]
-> **Branch Goal (`Mumen-demo`):** Create a unified demo launcher & testing simulator page allowing users to preview, launch, and interact with all three application UIs (Mother, Midwife, and Emergency Dispatcher) side-by-side in a single cohesive interface.
+**Live Demo:** [https://istekki-hack.pages.dev](https://istekki-hack.pages.dev)
 
 ---
 
 ## System Overview
 
-The solution consists of three specialized web applications running simultaneously:
+The solution consists of three specialized web applications running simultaneously with a unified testing hub:
 
-1. **Mother Application (`index.html`)**
+1. **Unified Multi-App Hub (`index.html`)**
+   - Embedded side-by-side simulator displaying all three viewports concurrently.
+   - 1-click **"Open All Side by Side"** multi-window launcher across monitor displays.
+   - Collapsible triage workflow instructions and direct app tabs.
+
+2. **Mother Application (`mother.html`)**
    - Direct 1-tap SOS emergency trigger with cancel grace period.
    - Real-time video and audio connection with on-duty midwife.
    - Automatic Kanta patient data and GPS location transmission.
    - Route guidance and emergency clinic information.
 
-2. **Midwife Remote Triage Application (`midwife.html`)**
+3. **Midwife Remote Triage Application (`midwife.html`)**
    - Clinician authentication and on-duty listening state toggle (Active / Busy / Break).
    - Instant incoming call reception screen showing gestational age (`H38+1`) and parity (`G2P1`).
    - Call transfer flow with mandatory clinical reason logging.
    - Connected call dock with Speaker, Video request/accept, and Patient EHR report.
    - Dual-dock triage controls: private ED backchannel microphone, ambulance escalation, observation timer, and call termination.
 
-3. **Emergency Dispatcher (ED / 112) Console (`ed.html`)**
+4. **Emergency Dispatcher (ED / 112) Console (`ed.html`)**
    - High-density CAD workstation tile aligned with Finnish ERICA emergency standards.
    - Live telemetry stream of patient contractions, pain intensity, amniotic fluid status, and ICD-10 diagnoses.
    - Real-time midwife triage recommendation alerts (Code A Ambulance vs Code C Home Observation).
@@ -36,24 +40,25 @@ The solution consists of three specialized web applications running simultaneous
 ## How to Run Locally
 
 ### Prerequisites
-- Node.js installed (or any local static HTTP file server).
+- Node.js (v18+)
 
 ### Start the Local Server
-Run any static file server from the project root directory:
+Run the built-in HTTP server from the project root directory:
 
 ```bash
-npx serve -l 3000 .
+npm start
 ```
 
-Or using Python:
+Or run directly with Node:
 ```bash
-python -m http.server 3000
+node server.js
 ```
 
 ### Accessing the Applications
-Open three separate browser windows or tabs side by side:
+Open your browser to:
 
-- **Mother App:** [http://localhost:3000/index.html](http://localhost:3000/index.html) (or `http://localhost:3000`)
+- **Unified Testing Hub:** [http://localhost:3000](http://localhost:3000)
+- **Mother App:** [http://localhost:3000/mother.html](http://localhost:3000/mother.html)
 - **Midwife App:** [http://localhost:3000/midwife.html](http://localhost:3000/midwife.html)
 - **ED Console:** [http://localhost:3000/ed.html](http://localhost:3000/ed.html)
 
@@ -68,7 +73,7 @@ To test the complete end-to-end emergency flow:
    - Tap the large green circular button to enter **"Listening"** mode (button turns red "Stop Listening").
 
 2. **Trigger Mother SOS:**
-   - On `index.html`, tap the large red **SOS** button.
+   - On `mother.html`, tap the large red **SOS** button.
    - The Midwife app (`midwife.html`) immediately receives the incoming call screen with a live upward elapsed timer, displaying patient demographics (`Sofia Korhonen`, `29`, `H38+1`, `G2P1`).
    - The ED Console (`ed.html`) simultaneously activates the incident mission card.
 
@@ -88,9 +93,9 @@ To test the complete end-to-end emergency flow:
 
 6. **Trigger Triage Escalation & Ambulance Dispatch:**
    - On `midwife.html`, inspect the upper triage dock:
-     - Tap **Ambulance (🚑)**: The ED console (`ed.html`) immediately flashes red with **"CODE A • URGENT EMS REQUIRED"**.
-     - Tap **Sand Timer (⏳)**: The ED console updates to amber **"CODE C • HOME OBSERVATION"**.
-     - Tap **Microphone (🎙️)**: Toggles the private muted backchannel between Midwife and ED.
+     - Tap **Ambulance**: The ED console (`ed.html`) immediately updates to **"CODE A - URGENT EMS REQUIRED"**.
+     - Tap **Observation (Timer)**: The ED console updates to **"CODE C - HOME OBSERVATION"**.
+     - Tap **Microphone**: Toggles the private muted backchannel between Midwife and ED.
    - On `ed.html`, click **"Confirm & Dispatch Ambulance"** to assign unit `ENS-121` and advance tracking to `En Route (ETA ~8m)`.
 
 7. **End Call:**
@@ -100,17 +105,21 @@ To test the complete end-to-end emergency flow:
 
 ## Technical Architecture
 
-- **Frontend Core:** Pure HTML5, Vanilla JavaScript ES Modules, and Vanilla CSS. No heavy frameworks, build steps, or external bundlers required.
+- **Frontend Core:** Pure HTML5, Vanilla JavaScript ES Modules, and Vanilla CSS. Zero build steps, external bundlers, or heavy frameworks.
 - **Real-Time Cross-App Sync:** Utilizes native browser `BroadcastChannel` (`791_emergency_bus`) with fallback to `window.localStorage` storage events for sub-5ms cross-window communication.
-- **Design System:** Custom CSS design tokens (`css/design-tokens.css`) using Google Font `Inter` across all applications.
+- **Security Hardening:** Secure HTTP headers (`X-Content-Type-Options`, `X-Frame-Options`, `CSP frame-ancestors`, `Permissions-Policy`), safe path normalization, and Subresource Integrity (SRI) on external assets.
 - **File Structure:**
   ```
-  ├── index.html                     # Mother Application Entry Point
+  ├── index.html                     # Unified Testing & Multi-App Landing Hub
+  ├── mother.html                    # Mother Application Entry Point
   ├── midwife.html                   # Midwife Application Entry Point
   ├── ed.html                        # Emergency Dispatcher CAD Console
+  ├── server.js                      # Hardened Local Node.js HTTP Server
+  ├── package.json                   # Project scripts and configuration
   ├── README.md                      # System Documentation & Testing Guide
   ├── css/
   │   ├── design-tokens.css          # Design system variables & color palettes
+  │   ├── landing.css                # Multi-app hub stylesheet
   │   ├── device-frame.css           # Hardware simulation shell & status bar
   │   ├── main.css                   # Global layout rules
   │   ├── components/                # Mother app component styles

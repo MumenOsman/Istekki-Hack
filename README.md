@@ -2,6 +2,9 @@
 
 An integrated three-application real-time triage system designed for out-of-hospital emergency childbirth in Finland. The system connects pregnant mothers, on-duty hospital midwives, and Emergency Dispatchers (ED / 112) through a unified real-time communications bus.
 
+> [!NOTE]
+> **Branch Goal (`Mumen-demo`):** Create a unified demo launcher & testing simulator page allowing users to preview, launch, and interact with all three application UIs (Mother, Midwife, and Emergency Dispatcher) side-by-side in a single cohesive interface.
+
 ---
 
 ## System Overview

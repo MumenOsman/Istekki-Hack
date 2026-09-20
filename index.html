@@ -58,25 +58,25 @@
     <section class="pane">
       <div class="pane-header">
         <span>Mother Application</span>
-        <a href="/mother" target="_blank" class="btn">Open in new tab</a>
+        <a href="mother.html" target="_blank" class="btn">Open in new tab</a>
       </div>
-      <iframe id="frameMother" class="pane-iframe" src="/mother" title="Mother Application"></iframe>
+      <iframe id="frameMother" class="pane-iframe" src="mother.html" title="Mother Application"></iframe>
     </section>
 
     <section class="pane">
       <div class="pane-header">
         <span>Midwife Remote Triage</span>
-        <a href="/midwife" target="_blank" class="btn">Open in new tab</a>
+        <a href="midwife.html" target="_blank" class="btn">Open in new tab</a>
       </div>
-      <iframe id="frameMidwife" class="pane-iframe" src="/midwife" title="Midwife Remote Triage"></iframe>
+      <iframe id="frameMidwife" class="pane-iframe" src="midwife.html" title="Midwife Remote Triage"></iframe>
     </section>
 
     <section class="pane">
       <div class="pane-header">
         <span>Emergency Dispatcher CAD</span>
-        <a href="/ed" target="_blank" class="btn">Open in new tab</a>
+        <a href="ed.html" target="_blank" class="btn">Open in new tab</a>
       </div>
-      <iframe id="frameEd" class="pane-iframe" src="/ed" title="Emergency Dispatcher Console"></iframe>
+      <iframe id="frameEd" class="pane-iframe" src="ed.html" title="Emergency Dispatcher Console"></iframe>
     </section>
   </main>
 
@@ -95,15 +95,15 @@
       const features = (left, width) =>
         `left=${left},top=${baseTop},width=${width},height=${availHeight},menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes`;
 
-      window.open('/mother', 'MotherAppWindow', features(baseLeft, colWidth));
-      window.open('/midwife', 'MidwifeAppWindow', features(baseLeft + colWidth, colWidth));
-      window.open('/ed', 'EDConsoleWindow', features(baseLeft + (colWidth * 2), lastColWidth));
+      window.open('mother.html', 'MotherAppWindow', features(baseLeft, colWidth));
+      window.open('midwife.html', 'MidwifeAppWindow', features(baseLeft + colWidth, colWidth));
+      window.open('ed.html', 'EDConsoleWindow', features(baseLeft + (colWidth * 2), lastColWidth));
     });
 
     document.getElementById('reloadFramesBtn').addEventListener('click', () => {
-      document.getElementById('frameMother').src = '/mother';
-      document.getElementById('frameMidwife').src = '/midwife';
-      document.getElementById('frameEd').src = '/ed';
+      document.getElementById('frameMother').src = 'mother.html';
+      document.getElementById('frameMidwife').src = 'midwife.html';
+      document.getElementById('frameEd').src = 'ed.html';
     });
   </script>
 </body>

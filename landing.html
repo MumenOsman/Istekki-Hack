@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maternal Emergency Triage System - Multi-App View</title>
+  <link rel="stylesheet" href="/css/landing.css">
+</head>
+<body>
+  <header class="toolbar">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg class="logo-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="24" rx="6" fill="#00897B"/>
+          <path d="M4 12H7.5L10 6L14 18L16.5 12H20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-code">791</span>
+        <span class="brand-name">Maternal Emergency System</span>
+      </div>
+    </div>
+    <div class="toolbar-actions">
+      <button id="openAllSideBySideBtn" class="btn btn-primary">Open All Side by Side</button>
+      <button id="reloadFramesBtn" class="btn">Reload All</button>
+    </div>
+  </header>
+
+  <section class="instructions-wrapper">
+    <details class="instructions-details" open>
+      <summary>Instructions for Usage (Click to collapse/expand)</summary>
+      <div class="instructions-content">
+        <div class="step">
+          <span class="step-num">1</span>
+          <div><strong>Midwife Duty:</strong> On Midwife app, log in (<code>502941</code> / <code>password123</code>) and tap the green button to enter Listening mode.</div>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <div><strong>Mother SOS:</strong> Tap the red SOS button on the Mother app to trigger emergency call and transmit telemetry.</div>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <div><strong>Answer Call:</strong> Tap Accept on the Midwife app to establish voice connection, request video, or view EHR report.</div>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <div><strong>Escalate to ED:</strong> Use Midwife triage dock to request Ambulance (Code A) or Observation (Code C); confirm dispatch on ED console.</div>
+        </div>
+        <div class="step">
+          <span class="step-num">5</span>
+          <div><strong>End Call:</strong> Tap Hang Up on either app to terminate the session and reset all apps to standby.</div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <main class="grid-container">
+    <section class="pane">
+      <div class="pane-header">
+        <span>Mother Application</span>
+        <a href="/mother" target="_blank" class="btn">Open in new tab</a>
+      </div>
+      <iframe id="frameMother" class="pane-iframe" src="/mother" title="Mother Application"></iframe>
+    </section>
+
+    <section class="pane">
+      <div class="pane-header">
+        <span>Midwife Remote Triage</span>
+        <a href="/midwife" target="_blank" class="btn">Open in new tab</a>
+      </div>
+      <iframe id="frameMidwife" class="pane-iframe" src="/midwife" title="Midwife Remote Triage"></iframe>
+    </section>
+
+    <section class="pane">
+      <div class="pane-header">
+        <span>Emergency Dispatcher CAD</span>
+        <a href="/ed" target="_blank" class="btn">Open in new tab</a>
+      </div>
+      <iframe id="frameEd" class="pane-iframe" src="/ed" title="Emergency Dispatcher Console"></iframe>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('openAllSideBySideBtn').addEventListener('click', () => {
+      const screenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+      const screenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+      const availWidth = window.screen.availWidth || window.innerWidth;
+      const availHeight = window.screen.availHeight || window.innerHeight;
+      const baseLeft = window.screen.availLeft !== undefined ? window.screen.availLeft : (screenLeft || 0);
+      const baseTop = window.screen.availTop !== undefined ? window.screen.availTop : (screenTop || 0);
+
+      const colWidth = Math.floor(availWidth / 3);
+      const lastColWidth = availWidth - (colWidth * 2);
+
+      const features = (left, width) =>
+        `left=${left},top=${baseTop},width=${width},height=${availHeight},menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes`;
+
+      window.open('/mother', 'MotherAppWindow', features(baseLeft, colWidth));
+      window.open('/midwife', 'MidwifeAppWindow', features(baseLeft + colWidth, colWidth));
+      window.open('/ed', 'EDConsoleWindow', features(baseLeft + (colWidth * 2), lastColWidth));
+    });
+
+    document.getElementById('reloadFramesBtn').addEventListener('click', () => {
+      document.getElementById('frameMother').src = '/mother';
+      document.getElementById('frameMidwife').src = '/midwife';
+      document.getElementById('frameEd').src = '/ed';
+    });
+  </script>
+</body>
+</html>

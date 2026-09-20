@@ -37,24 +37,47 @@ const ROUTE_ALIASES = {
   '/ed': '/ed.html'
 };
 
-const server = http.createServer((req, res) => {
-  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-  let pathname = parsedUrl.pathname;
+// Security headers applied to all responses
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'SAMEORIGIN',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Content-Security-Policy': "frame-ancestors 'self'",
+  'Permissions-Policy': 'camera=*, microphone=*, geolocation=*'
+};
 
+const server = http.createServer((req, res) => {
+  // 1. Safe URL parsing with unhandled exception protection
+  let pathname = '/';
+  try {
+    const host = req.headers.host || 'localhost';
+    const parsedUrl = new URL(req.url, `http://${host}`);
+    pathname = decodeURIComponent(parsedUrl.pathname);
+  } catch (err) {
+    res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8', ...SECURITY_HEADERS });
+    res.end('400 Bad Request');
+    return;
+  }
+
+  // 2. Route Alias resolution
   if (ROUTE_ALIASES[pathname]) {
     pathname = ROUTE_ALIASES[pathname];
   }
 
-  let safePath = path.normalize(path.join(__dirname, pathname));
-  if (!safePath.startsWith(__dirname)) {
-    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+  // 3. Strict Path Traversal Defense
+  const safePath = path.resolve(__dirname, '.' + pathname);
+  const isWithinDir = safePath === __dirname || safePath.startsWith(__dirname + path.sep);
+
+  if (!isWithinDir) {
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8', ...SECURITY_HEADERS });
     res.end('403 Forbidden');
     return;
   }
 
+  // 4. File existence and stat validation
   fs.stat(safePath, (err, stats) => {
     if (err || !stats.isFile()) {
-      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8', ...SECURITY_HEADERS });
       res.end(`404 Not Found: ${pathname}`);
       return;
     }
@@ -62,13 +85,16 @@ const server = http.createServer((req, res) => {
     const ext = path.extname(safePath).toLowerCase();
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-    res.writeHead(200, { 'Content-Type': contentType });
+    res.writeHead(200, {
+      'Content-Type': contentType,
+      ...SECURITY_HEADERS
+    });
     fs.createReadStream(safePath).pipe(res);
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server is running securely at http://localhost:${PORT}`);
   console.log(`- Landing Page: http://localhost:${PORT}/ (or /landing)`);
   console.log(`- Mother App:   http://localhost:${PORT}/mother (or /index.html, /mother.html)`);
   console.log(`- Midwife App:  http://localhost:${PORT}/midwife (or /midwife.html)`);

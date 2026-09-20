@@ -220,7 +220,18 @@ function addLogEntry(text) {
 
   const row = document.createElement('div');
   row.className = 'log-item';
-  row.innerHTML = `<span class="time">[${timeStr}]</span> <span class="msg">${text}</span>`;
+
+  const timeSpan = document.createElement('span');
+  timeSpan.className = 'time';
+  timeSpan.textContent = `[${timeStr}]`;
+
+  const msgSpan = document.createElement('span');
+  msgSpan.className = 'msg';
+  msgSpan.textContent = text;
+
+  row.appendChild(timeSpan);
+  row.appendChild(document.createTextNode(' '));
+  row.appendChild(msgSpan);
 
   logList.appendChild(row);
   logList.scrollTop = logList.scrollHeight;

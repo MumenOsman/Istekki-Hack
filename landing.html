@@ -26,6 +26,11 @@
     </div>
   </header>
 
+  <div id="popupBanner" class="popup-banner">
+    <span>Pop-ups blocked by browser: To allow all 3 windows to open simultaneously side-by-side, please click the pop-up icon in your browser's address bar, select "Always allow pop-ups from this site", and click "Open All Side by Side" again.</span>
+    <button id="dismissBannerBtn" class="btn" style="padding: 2px 8px; font-size: 11px;">Dismiss</button>
+  </div>
+
   <section class="instructions-wrapper">
     <details class="instructions-details" open>
       <summary>Instructions for Usage (Click to collapse/expand)</summary>
@@ -95,9 +100,18 @@
       const features = (left, width) =>
         `left=${left},top=${baseTop},width=${width},height=${availHeight},menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes`;
 
-      window.open('mother.html', 'MotherAppWindow', features(baseLeft, colWidth));
-      window.open('midwife.html', 'MidwifeAppWindow', features(baseLeft + colWidth, colWidth));
-      window.open('ed.html', 'EDConsoleWindow', features(baseLeft + (colWidth * 2), lastColWidth));
+      const win1 = window.open('mother.html', 'MotherAppWindow', features(baseLeft, colWidth));
+      const win2 = window.open('midwife.html', 'MidwifeAppWindow', features(baseLeft + colWidth, colWidth));
+      const win3 = window.open('ed.html', 'EDConsoleWindow', features(baseLeft + (colWidth * 2), lastColWidth));
+
+      if (!win2 || !win3 || win2.closed || typeof win2.closed === 'undefined') {
+        const banner = document.getElementById('popupBanner');
+        if (banner) banner.classList.add('visible');
+      }
+    });
+
+    document.getElementById('dismissBannerBtn')?.addEventListener('click', () => {
+      document.getElementById('popupBanner')?.classList.remove('visible');
     });
 
     document.getElementById('reloadFramesBtn').addEventListener('click', () => {
